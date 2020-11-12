@@ -1,7 +1,8 @@
 <?php
-   $PAGE_TITLE="All Orders";
-   include  '../../../templates/header.php'; 
-           
+   $PAGE_TITLE = "All Orders";
+   $PAGE_STYLESHEETS = "";
+   $PAGE_SCRIPTS = "";
+   require_once "../../../templates/header.php";           
 ?>
 
 <?php
