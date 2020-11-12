@@ -1,10 +1,9 @@
 <?php
-    function callback($buffer)
-    {
+    function callback($buffer){
         global $PAGE_TITLE, $PAGE_STYLESHEETS, $PAGE_SCRIPTS;
-        $buffer = preg_replace('/(<\s?title\s?>)(.*?)(<\s?\t/itle\s?>)/i', '$1' . $PAGE_TITLE . '$3', $buffer);
+        $buffer = preg_replace('/(<\s?title\s?>)(.*)(<\s?\/title\s?>)/i', '$1' . $PAGE_TITLE . '$3', $buffer); 
         $buffer = preg_replace('/%STYLE_SHEETS%/i',$PAGE_STYLESHEETS , $buffer);
-        $buffer = preg_replace('/%PAGE_SCRIPTS%/i',$PAGE_SCRIPTS , $buffer);
+        $buffer = preg_replace('/%PAGE_SCRIPTS%/i',$PAGE_SCRIPTS , $buffer); 
         return $buffer;
     }
     ob_start("callback");
@@ -19,7 +18,6 @@ $user = "admin";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/fontaswesme-all.min.css">
     %STYLE_SHEETS% 
 </head>
