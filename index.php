@@ -1,5 +1,5 @@
 <?php 
-$PAGE_TITLE = "My Orders";
+$PAGE_TITLE = "";
 $PAGE_STYLESHEETS = '';
 $PAGE_SCRIPTS = ''; ?> 
 
