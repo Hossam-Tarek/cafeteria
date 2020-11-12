@@ -34,4 +34,4 @@ INSERT INTO `Product` (category_id, name, price, image) VALUES
 (8, 'Lemonado', 9, 'lemonado.jpg'),
 (9, 'Dutch Apple Pie', 5, 'Dutch-Apple-Pie.png'),
 (9, 'German Chocolate Cake', 5, 'German-Chocolate-Cake.png'),
-(9, 'Key Lime Pie', 5, 'Key-Lime-Pie.png';
+(9, 'Key Lime Pie', 5, 'Key-Lime-Pie.png');
