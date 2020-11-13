@@ -5,7 +5,8 @@ require_once "database_connection.php";
 
 if (isset($_POST["email"]) && isset($_POST["password"])) {
     // Logout the current logged in user.
-    unset($_SESSION["email"]);
+    session_destroy();
+    session_start();
 
     if ($_POST["email"] === "admin@cafeteria.com" && $_POST["password"] === "CafeteriaAdmin-2020") {
         $_SESSION["name"] = "Admin";
