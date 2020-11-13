@@ -3,9 +3,11 @@
      $PAGE_STYLESHEETS = "";
      $PAGE_SCRIPTS = "";
      require_once  "../../../templates/header.php"; 
-     require_once "../../../templates/database_connection.php";
+     require_once "../../../database_connection.php";
 ?>
-
+<div class='container'>
+<div class='row'>
+<div class='col-sm-12'>
 <?php
       try{
       echo "<br>";
@@ -13,9 +15,9 @@
       echo "<br>";
         $stmt=$conn->prepare("SELECT * FROM `product`");
         $stmt->execute();
-        $result=$stmt->fetchAll();
-            
-         echo "<table class='table  table-bordered table-hover'>
+        $result=$stmt->fetchAll();       
+         echo 
+      "<table class='table  table-hover'>
          <thead>
            <tr>
              <th scope=col>Product_ID</th>
@@ -25,8 +27,6 @@
              <th scope=col>Product_Image</th>
              <th scope=col>Product_Avilability</th>
              <th scope=col>Actions</th>
-
-
            </tr>
          </thead>";
      foreach($result as $resul){
@@ -34,10 +34,10 @@
       "<td> ".$resul['category_id']. "</td>".
       "<td> ".$resul['name']. "</td>".
       "<td> ".$resul['price']. "</td>".
-     "<td>"."<img src=".$resul['image']." width=150 height=100>"."</td>".
+     "<td>"."<img src=".'../../../images/products/'.$resul['image']." width='150' height='100' style='border-radius:50%;'>"."</td>".
      "<td> ".$resul['available']. "</td>".
      "<td>" ."<button class='btn btn-danger'>Delete</button>
-     <button class='btn btn-warning'>Edit</button>" ."</td>".
+     <button class='btn btn-primary'>Edit</button>" ."</td>".
      "</tr> </tbody>";
      }
      echo "</table>";
@@ -47,7 +47,9 @@
      }
      
 ?>
-
+</div>
+</div>
+</div>
 <?php
       require_once  "../../../templates/footer.php";
 ?>
