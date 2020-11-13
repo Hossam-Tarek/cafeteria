@@ -1,7 +1,53 @@
 <?php
 
+session_start();
+require_once "database_connection.php";
 
+if (isset($_POST["email"]) && isset($_POST["password"])) {
+    // Logout the current logged in user.
+    unset($_SESSION["email"]);
 
+    if ($_POST["email"] === "admin@cafeteria.com" && $_POST["password"] === "CafeteriaAdmin-2020") {
+        $_SESSION["name"] = "Admin";
+        $_SESSION["email"] = "admin@cafeteria.com";
+        $_SESSION["account-type"] = "user";
+        $_SESSION["success"] = "Logged in successfully";
+        header("Location: /cafeteria/views/admin/index.php");
+        return;
+    }
+
+    $sql = "SELECT name, email, password FROM User WHERE email = :email";
+    $statement = $conn->prepare($sql);
+    $statement->bindValue(":email", $_POST["email"], PDO::PARAM_STR);
+
+    if ($statement) {
+        $statement->execute();
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if (!$row) {
+            $_SESSION["error"] = "This email doesn't exist in our database. Please contact support";
+            header("Location: /cafeteria/login.php");
+            return;
+        }
+    } else {
+        $_SESSION["error"] = "Bad input data";
+        header("Location: /cafeteria/login.php");
+        return;
+    }
+
+    if (md5($_POST["password"]) === $row["password"]) {
+        $_SESSION["name"] = $row["name"];
+        $_SESSION["email"] = $_POST["email"];
+        $_SESSION["account-type"] = "user";
+        $_SESSION["success"] = "Logged in successfully";
+        header("Location: /cafeteria/views/user/index.php");
+        return;
+    } else {
+        $_SESSION["error"] = "Incorrect password";
+        header("Location: /cafeteria/login.php");
+        return;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -25,6 +71,14 @@
                             <h1 class="logo__text">Cafeteria</h1>
                         </a>
                     </div>
+
+                    <?php
+                        if (isset($_SESSION["error"])) {
+                            echo "<p class='error'>". $_SESSION["error"] ."</p>";
+                            unset($_SESSION["error"]);
+                        }
+                    ?>
+
                     <div class="form__group mb-3">
                         <input type="email" id="email" name="email" class="form-control"
                                placeholder="Email address" autofocus>
