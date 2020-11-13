@@ -3,21 +3,21 @@
    $PAGE_STYLESHEETS = "";
    $PAGE_SCRIPTS = "";
    require_once "../../../templates/header.php";   
-   require_once "../../../templates/database_connection.php";        
+   require_once "../../../database_connection.php";        
 ?>
-
+<div class='container'>
+<div class='row'>
+<div class='col-sm-12'>
 <?php
   try{ 
       echo "<br>";
       echo "<h1 class=text-center>All Orders</h1>";
       echo "<br>";
-
         $stmt=$conn->prepare("SELECT * FROM `order`");
        $stmt->execute();
         $result=$stmt->fetchAll();
-        
-         echo 
-    "<table class='table  table-bordered table-hover'>
+         echo  
+    "<table class='table  table-hover '>
         <thead >
            <tr>
              <th scope=col>Order_ID</th>
@@ -40,7 +40,7 @@
             "<td> ".$resul['status']. "</td>".
             "<td> ".$resul['comment']. "</td>".
             "<td>" ."<button class='btn btn-danger'>Delete</button>
-            <button class='btn btn-warning'>Edit</button>" ."</td>".
+            <button class='btn btn-primary'>Edit</button>" ."</td>".
      "</tr> 
 </tbody>";
      }
@@ -50,7 +50,9 @@
          echo "Faild To show All orders data".$e->getMessage();
      }    
 ?>
-
+</div>
+</div>
+</div>
 <?php
      
      require_once  "../../../templates/footer.php"; 
