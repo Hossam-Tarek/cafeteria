@@ -3,13 +3,24 @@
 session_start();
 require_once "database_connection.php";
 
+if (isset($_SESSION["email"]) && isset($_SESSION["account-type"])) {
+    if ($_SESSION["account-type"] === "admin") {
+        header("Location: /cafeteria/views/admin/index.php");
+        return;
+    }
+    if ($_SESSION["account-type"] === "user") {
+        header("Location: /cafeteria/views/user/index.php");
+        return;
+    }
+}
+
 if (isset($_POST["email"]) && isset($_POST["password"])) {
     // Logout the current logged in user.
     session_destroy();
     session_start();
 
     if ($_POST["email"] === "admin@cafeteria.com" && $_POST["password"] === "CafeteriaAdmin-2020") {
-        $_SESSION["name"] = "Admin";
+        $_SESSION["name"] = "admin";
         $_SESSION["email"] = "admin@cafeteria.com";
         $_SESSION["account-type"] = "user";
         $_SESSION["success"] = "Logged in successfully";

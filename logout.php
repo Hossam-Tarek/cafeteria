@@ -2,5 +2,5 @@
 
 session_start();
 session_destroy();
-header("Location: /category/index.php");
+header("Location: /cafeteria/index.php");
 return;
