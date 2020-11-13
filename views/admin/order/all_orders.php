@@ -2,31 +2,23 @@
    $PAGE_TITLE = "All Orders";
    $PAGE_STYLESHEETS = "";
    $PAGE_SCRIPTS = "";
-   require_once "../../../templates/header.php";           
+   require_once "../../../templates/header.php";   
+   require_once "../../../templates/database_connection.php";        
 ?>
 
 <?php
-      $servername="mysql:host=localhost;dbname=cafeteria";
-      $username="root";
-      $password="";
-      
-      try
-      {
-          $conn=new PDO($servername,$username,$password);
-          $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+  try{ 
       echo "<br>";
       echo "<h1 class=text-center>All Orders</h1>";
       echo "<br>";
 
         $stmt=$conn->prepare("SELECT * FROM `order`");
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
        $stmt->execute();
         $result=$stmt->fetchAll();
         
          echo 
-    "<table class='table '>
-        <thead class=thead-dark>
+    "<table class='table  table-bordered table-hover'>
+        <thead >
            <tr>
              <th scope=col>Order_ID</th>
              <th scope=col>User_ID</th>
@@ -48,23 +40,18 @@
             "<td> ".$resul['status']. "</td>".
             "<td> ".$resul['comment']. "</td>".
             "<td>" ."<button class='btn btn-danger'>Delete</button>
-            <button class='btn btn-success'>Edit</button>" ."</td>".
+            <button class='btn btn-warning'>Edit</button>" ."</td>".
      "</tr> 
 </tbody>";
      }
      echo "</table>";
              
-     }catch(PDOExeption $e)
-     {
-         echo "Faild To show All users data".$e->getMessage();
-     }
-     
-     
+     }catch(PDOExeption $e){
+         echo "Faild To show All orders data".$e->getMessage();
+     }    
 ?>
 
 <?php
      
-     include  '../../../templates/footer.php'; 
-   
-  
+     require_once  "../../../templates/footer.php"; 
 ?>
