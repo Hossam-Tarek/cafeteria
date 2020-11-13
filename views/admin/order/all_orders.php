@@ -1,7 +1,7 @@
 <?php
    $PAGE_TITLE = "All Orders";
    $PAGE_STYLESHEETS = "";
-   $PAGE_SCRIPTS = "";
+   $PAGE_SCRIPTS = "<script src='/cafeteria/js/admin/main.js'></script>";
    require_once "../../../templates/header.php";   
    require_once "../../../database_connection.php";        
 ?>
@@ -9,11 +9,18 @@
 <div class='row'>
 <div class='col-sm-12'>
 <?php
+    function ValidateData($data){
+      $data=htmlentities($data);
+      $data=htmlspecialchars($data);
+      $data=trim($data);
+      $data=stripslashes($data);
+      return $data;
+    }
   try{ 
       echo "<br>";
       echo "<h1 class=text-center>All Orders</h1>";
       echo "<br>";
-        $stmt=$conn->prepare("SELECT * FROM `order`");
+        $stmt=$conn->prepare("SELECT * FROM `Order`");
        $stmt->execute();
         $result=$stmt->fetchAll();
          echo  
@@ -33,12 +40,12 @@
      echo 
  "<tbody>
         <tr> 
-            <td> ".$resul['order_id']. "</td>".
-            "<td> ".$resul['user_id']. "</td>".
-            "<td> ".$resul['room_id']. "</td>".
-            "<td> ".$resul['date']. "</td>".
-            "<td> ".$resul['status']. "</td>".
-            "<td> ".$resul['comment']. "</td>".
+            <td> ".ValidateData($resul['order_id']). "</td>".
+            "<td> ".ValidateData($resul['user_id']). "</td>".
+            "<td> ".ValidateData($resul['room_id']). "</td>".
+            "<td> ".ValidateData($resul['date']). "</td>".
+            "<td> ".ValidateData($resul['status']). "</td>".
+            "<td> ".ValidateData($resul['comment']). "</td>".
             "<td>" ."<button class='btn btn-danger'>Delete</button>
             <button class='btn btn-primary'>Edit</button>" ."</td>".
      "</tr> 
