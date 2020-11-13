@@ -3,8 +3,11 @@
  $PAGE_STYLESHEETS = "";
  $PAGE_SCRIPTS = "";
  require_once  "../../../templates/header.php"; 
- require_once "../../../templates/database_connection.php";  
+ require_once "../../../database_connection.php";  
 ?>
+<div class='container'>
+<div class="row ">
+<div class='col-sm-12'>
 <?php  
   try{
       echo "<br>";
@@ -14,7 +17,7 @@
         $stmt->execute();
         $result=$stmt->fetchAll();
             
-         echo "<table class='table table-bordered table-hover'>
+         echo "<table class='table  table-hover'>
          <thead  >
            <tr>
              <th scope=col>ID</th>
@@ -34,9 +37,9 @@
       "<td> ".$resul['email']. "</td>".
       "<td> ".$resul['password']. "</td>".
       "<td> ".$resul['extra_info']. "</td>".
-     "<td>"."<img src=".$resul['avatar']." width=150 height=100>"."</td>".
+     "<td>"."<img src=".'../../../images/users/'.$resul['avatar']." width=150 height=100 style='border-radius:50%;'>"."</td>".
      "<td>" ."<button class='btn btn-danger'>Delete</button>
-     <button class='btn btn-warning'>Edit</button>" ."</td>".
+     <button class='btn btn-primary'>Edit</button>" ."</td>".
      
      "</tr> </tbody>";
      }
@@ -47,7 +50,9 @@
      }
        
 ?>
-
+</div>
+</div>
+</div>
 <?php
    require_once "../../../templates/footer.php"; 
 ?>
