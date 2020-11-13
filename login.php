@@ -20,9 +20,9 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
     session_start();
 
     if ($_POST["email"] === "admin@cafeteria.com" && $_POST["password"] === "CafeteriaAdmin-2020") {
-        $_SESSION["name"] = "admin";
+        $_SESSION["name"] = "Admin";
         $_SESSION["email"] = "admin@cafeteria.com";
-        $_SESSION["account-type"] = "user";
+        $_SESSION["account-type"] = "admin";
         $_SESSION["success"] = "Logged in successfully";
         header("Location: /cafeteria/views/admin/index.php");
         return;
