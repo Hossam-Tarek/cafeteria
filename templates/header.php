@@ -11,15 +11,14 @@
 <?php
 $user = "admin";
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/fontaswesme-all.min.css">
+    <link rel="stylesheet" href="/cafeteria/css/bootstrap.css">
+    <link rel="stylesheet" href="/cafeteria/css/fontaswesme-all.min.css">
     %STYLE_SHEETS% 
 </head>
 <body>
@@ -45,7 +44,7 @@ $user = "admin";
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                        <img src="1.jpg" width="40" height="40" class="rounded-circle">
+                        <img src="/cafeteria/img/1.jpg" width="40" height="40" class="rounded-circle">
                    </a>
                 </li>
                 <li class="nav-item mt-2 nav-link"><?php if (isset($user)) {echo "Waheed";} 
@@ -53,6 +52,3 @@ $user = "admin";
             </ul>
         </div>
     </nav>
-
-
-
