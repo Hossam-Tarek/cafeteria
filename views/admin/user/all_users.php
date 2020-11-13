@@ -1,35 +1,21 @@
-
 <?php
  $PAGE_TITLE="All Users";
- include  '../../../templates/header.php'; 
-   
+ $PAGE_STYLESHEETS = "";
+ $PAGE_SCRIPTS = "";
+ require_once  "../../../templates/header.php"; 
+ require_once "../../../templates/database_connection.php";  
 ?>
-<?php
-
-     $servername="mysql:host=localhost;dbname=cafeteria";
-     $username="root";
-     $password="";
-     
-     try
-     {
-         $conn=new PDO($servername,$username,$password);
-         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-   
+<?php  
+  try{
       echo "<br>";
       echo "<h1 class=text-center>All Users</h1>";
-      echo "<br>";
-  
-      
+      echo "<br>";    
         $stmt=$conn->prepare("SELECT * FROM `user`");
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-     
         $stmt->execute();
-     
         $result=$stmt->fetchAll();
             
-         echo "<table class=table>
-         <thead class=thead-dark>
+         echo "<table class='table table-bordered table-hover'>
+         <thead  >
            <tr>
              <th scope=col>ID</th>
              <th scope=col>Room_id</th>
@@ -39,8 +25,6 @@
              <th scope=col>Exetra_Info</th>
              <th scope=col>Avatar</th>
              <th scope=col>Actions</th>
-
-       
            </tr>
          </thead>";
      foreach($result as $resul){
@@ -52,22 +36,18 @@
       "<td> ".$resul['extra_info']. "</td>".
      "<td>"."<img src=".$resul['avatar']." width=150 height=100>"."</td>".
      "<td>" ."<button class='btn btn-danger'>Delete</button>
-     <button class='btn btn-success'>Edit</button>" ."</td>".
+     <button class='btn btn-warning'>Edit</button>" ."</td>".
      
      "</tr> </tbody>";
      }
      echo "</table>";
-             
-  
-     }catch(PDOExeption $e)
-     {
+            
+     }catch(PDOExeption $e){
          echo "Faild To show All users data".$e->getMessage();
      }
-     
-     
+       
 ?>
 
 <?php
-   include  '../../../templates/footer.php'; 
-  
+   require_once "../../../templates/footer.php"; 
 ?>
