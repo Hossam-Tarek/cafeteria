@@ -70,12 +70,12 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
 
                     <div class="form__group mb-3">
                         <input type="email" id="email" name="email" class="form-control"
-                               placeholder="Email address" autofocus>
+                               placeholder="Email address" autofocus required>
                         <label for="email">Email address</label>
                     </div>
                     <div class="form__group mb-3">
                         <input type="password" id="password" name="password" class="form-control"
-                               placeholder="Password">
+                               placeholder="Password" pattern="(.+){8,}" title="Password must be at least 8 digits." required>
                         <label for="password">Password</label>
                     </div>
                     <input type="submit" name="submit" id="submit" value="Reset password"

@@ -82,12 +82,12 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
 
                     <div class="form__group mb-3">
                         <input type="email" id="email" name="email" class="form-control"
-                               placeholder="Email address" autofocus>
+                               placeholder="Email address" autofocus required>
                         <label for="email">Email address</label>
                     </div>
                     <div class="form__group mb-3">
                         <input type="password" id="password" name="password" class="form-control"
-                               placeholder="Password">
+                               placeholder="Password" required>
                         <label for="password">Password</label>
                     </div>
                     <div class="checkbox mb-3">
