@@ -1,32 +1,22 @@
 <?php
      $PAGE_TITLE="All Products";
-     include  '../../../templates/header.php'; 
-   
+     $PAGE_STYLESHEETS = "";
+     $PAGE_SCRIPTS = "";
+     require_once  "../../../templates/header.php"; 
+     require_once "../../../templates/database_connection.php";
 ?>
 
 <?php
-      $servername="mysql:host=localhost;dbname=cafeteria";
-      $username="root";
-      $password="";
-      
-      try
-      {
-          $conn=new PDO($servername,$username,$password);
-          $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+      try{
       echo "<br>";
       echo "<h1 class=text-center>All Products</h1>";
       echo "<br>";
         $stmt=$conn->prepare("SELECT * FROM `product`");
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-     
         $stmt->execute();
-     
         $result=$stmt->fetchAll();
             
-         echo "<table class=table>
-         <thead class=thead-dark>
+         echo "<table class='table  table-bordered table-hover'>
+         <thead>
            <tr>
              <th scope=col>Product_ID</th>
              <th scope=col>Category_ID</th>
@@ -36,7 +26,7 @@
              <th scope=col>Product_Avilability</th>
              <th scope=col>Actions</th>
 
-       
+
            </tr>
          </thead>";
      foreach($result as $resul){
@@ -47,23 +37,17 @@
      "<td>"."<img src=".$resul['image']." width=150 height=100>"."</td>".
      "<td> ".$resul['available']. "</td>".
      "<td>" ."<button class='btn btn-danger'>Delete</button>
-     <button class='btn btn-success'>Edit</button>" ."</td>".
-
-
-     
+     <button class='btn btn-warning'>Edit</button>" ."</td>".
      "</tr> </tbody>";
      }
      echo "</table>";
              
-     }catch(PDOExeption $e)
-     {
+     }catch(PDOExeption $e){
          echo "Faild To show All products data".$e->getMessage();
      }
-     
      
 ?>
 
 <?php
-        include  '../../../templates/header.php'; 
-  
+      require_once  "../../../templates/footer.php";
 ?>
