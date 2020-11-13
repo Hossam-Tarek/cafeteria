@@ -19,8 +19,11 @@
         <div class="row">
             <div class="col-sm-12 col-md-7 col-lg-6 mx-auto">
                 <form method="POST" class="form">
-                    <div class="text-center mb-4">
-                        <a id="logo" class="mb-4" href="index.php">Cafeteria</a>
+                    <div class="logo-container text-center">
+                        <a class="logo text-center mb-5" href="index.php" alt="logo">
+                            <img class="logo__img mb-2" src="/cafeteria/img/logo.png" alt="logo">
+                            <h1 class="logo__text">Cafeteria</h1>
+                        </a>
                     </div>
                     <div class="form__group mb-3">
                         <input type="email" id="email" name="email" class="form-control"
@@ -37,11 +40,10 @@
                         <label for="remember-me"> Remember me</label>
                         <a href="forget-password.php" class="float-right">Forget password</a>
                     </div>
-                    <!--                    <input class="btn btn-lg btn-primary btn-block" type="submit"></input>-->
                     <input type="submit" name="submit" id="submit" value="Sign in"
                            class="btn btn-lg btn-primary btn-block">
 
-                    <p class="mt-5 mb-3 text-muted text-center">© 2020</p>
+                    <p class="mt-3 mb-3 text-muted text-center">© 2020</p>
                 </form>
             </div>
         </div>
