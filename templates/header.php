@@ -45,7 +45,7 @@ $user = "admin";
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                        <img src="1.jpg" width="40" height="40" class="rounded-circle">
+                        <img src="http://localhost/cafeteria/1.jpg" width="40" height="40" class="rounded-circle">
                    </a>
                 </li>
                 <li class="nav-item mt-2 nav-link"><?php if (isset($user)) {echo "Waheed";} 

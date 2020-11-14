@@ -1,17 +1,12 @@
 <?php $PAGE_TITLE = "My Orders";
-      $PAGE_Stylesheets = "<link rel='stylesheet' href='../../css/user/my-orders.css'>";
+      $PAGE_Stylesheets = "<link rel='stylesheet' href='../../css/user/my_order.css'>";
       $PAGE_scripts = ""; ?>
 
 <?php require_once '../../templates/header.php'; ?>
 <head>
     <link rel="stylesheet" href="../../css/bootstrap.css">
 <style>
-    body {
-        background-color: aquamarine;
-    }
-    .row div {
-        border: 1px solid #000;
-    }
+
 </style>
 </head>
 <div class="container-fluid">
