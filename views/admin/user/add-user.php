@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+require_once "../../../database_connection.php";
 
 if (!isset($_SESSION["account-type"]) || $_SESSION["account-type"] !== "admin") {
     header("Location: /cafeteria/index.php");
@@ -10,6 +11,43 @@ if (!isset($_SESSION["account-type"]) || $_SESSION["account-type"] !== "admin") 
 $PAGE_TITLE="Add User";
 $PAGE_STYLESHEETS = "<link rel='stylesheet' href='/cafeteria/css/admin/add-user.css'>";
 $PAGE_SCRIPTS = "";
+
+// Validate password must be not less than 8 characters.
+function validatePassword($password) {
+    if (strlen($password) < 8) {
+        return false;
+    }
+    return true;
+}
+
+// Validate email address.
+function validateEmail($email) {
+    $pattern = "/^[0-9a-z-_]+(\.?[0-9a-z-_])+@[a-z]+(\.[a-z]+)+$/i";
+    return preg_match($pattern, $email);
+}
+
+if (isset($_POST["submit"])) {
+    if (!isset($_POST["username"]) || strlen($_POST["username"]) < 1) {
+        $_SESSION["error"] = "Username is required.";
+        header("Location: /cafeteria/views/admin/user/add-user.php");
+        return;
+    }
+    if (!isset($_POST["email"]) || !validateEmail($_POST["email"])) {
+        $_SESSION["error"] = "Invalid email address.";
+        header("Location: /cafeteria/views/admin/user/add-user.php");
+        return;
+    }
+    if (!isset($_POST["password"]) || !validatePassword($_POST["password"])) {
+        $_SESSION["error"] = "Password must be not less than 8 characters.";
+        header("Location: /cafeteria/views/admin/user/add-user.php");
+        return;
+    }
+    if (!isset($_POST["confirm-password"]) || !validatePassword($_POST["confirm-password"])) {
+        $_SESSION["error"] = "Password and confirm password must match.";
+        header("Location: /cafeteria/views/admin/user/add-user.php");
+        return;
+    }
+}
 ?>
 
 <?php require_once "../../../templates/header.php"?>
@@ -19,6 +57,13 @@ $PAGE_SCRIPTS = "";
         <div class="col-sm-12 col-md-6 col-lg-5 mx-auto">
             <form method="POST" class="form mb-4">
                 <h1 class="form__header text-center mt-3 mb-4">Add user</h1>
+
+                <?php
+                if (isset($_SESSION["error"])) {
+                    echo "<p class='error-message'>".$_SESSION["error"]."</p>";
+                    unset($_SESSION["error"]);
+                }
+                ?>
 
                 <label for="username">Username</label>
                 <div class="input-group mb-3">

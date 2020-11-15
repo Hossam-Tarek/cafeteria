@@ -8,10 +8,18 @@ body {
     font-family: Poppins, sans-serif;
 }
 
-h1 {
+.form > label {
+    display: block;
+}
+
+.form__header {
     color: #666666;
 }
 
 input {
     height: 45px;
+}
+
+.error-message {
+    color: #ff0000;
 }
