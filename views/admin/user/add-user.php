@@ -47,6 +47,11 @@ if (isset($_POST["submit"])) {
         header("Location: /cafeteria/views/admin/user/add-user.php");
         return;
     }
+    if (!isset($_POST["room-name"]) || $_POST["room-name"] == 0) {
+        $_SESSION["error"] = "Room name is required";
+        header("Location: /cafeteria/views/admin/user/add-user.php");
+        return;
+    }
 }
 ?>
 
@@ -108,10 +113,15 @@ if (isset($_POST["submit"])) {
                         <i class="fas fa-door-open input-group-text p-2 px-3"></i>
                     </div>
                     <select class="custom-select" id="room-name" name="room-name">
-                        <option selected>--Please choose a room name--</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        <option value="0" selected>--Please choose a room name--</option>
+                        <?php
+                            $sql = "SELECT * FROM Room";
+                            $stm = $conn->prepare($sql);
+                            $stm->execute();
+                            while ($row = $stm->fetch(PDO::FETCH_ASSOC)) {
+                                echo "<option value='".$row["room_id"]."'>".$row["name"]."</option>";
+                            }
+                        ?>
                     </select>
                 </div>
 
