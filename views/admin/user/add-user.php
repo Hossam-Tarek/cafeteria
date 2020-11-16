@@ -52,6 +52,19 @@ if (isset($_POST["submit"])) {
         header("Location: /cafeteria/views/admin/user/add-user.php");
         return;
     }
+
+    // Upload user picture.
+    $picture = $_FILES["picture"];
+    $dir = "../../../images/avatars/";
+    $name = $_POST["email"] . "." . strtolower(pathinfo($picture["name"], PATHINFO_EXTENSION));
+    $path = $dir . $name;
+
+    if ($picture["size"] == 0 || $picture["size"] > 5000000) {
+        $_SESSION["error"] = "Picture is too large choose another one and try again.";
+        header("Location: /cafeteria/views/admin/user/add-user.php");
+        return;
+    }
+    move_uploaded_file($picture["tmp_name"], $path);
 }
 ?>
 
@@ -60,7 +73,7 @@ if (isset($_POST["submit"])) {
 <div class="container">
     <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-5 mx-auto">
-            <form method="POST" class="form mb-4">
+            <form method="POST" class="form mb-4" enctype="multipart/form-data">
                 <h1 class="form__header text-center mt-3 mb-4">Add user</h1>
 
                 <?php
