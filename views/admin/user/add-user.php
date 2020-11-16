@@ -84,7 +84,9 @@ if (isset($_POST["submit"])) {
     $stm->bindValue(":extra_info", $_POST["extra-info"],
         $_POST["extra-info"] ? PDO::PARAM_STR : PDO::PARAM_NULL);
     $stm->bindValue(":avatar", $pictureName,
-        $_POST["extra-info"] ? PDO::PARAM_STR : PDO::PARAM_NULL);
+        $pictureName ? PDO::PARAM_STR : PDO::PARAM_NULL);
+
+    var_dump($pictureName);
 
     $conn->beginTransaction();
     if ($stm->execute()) {
@@ -119,7 +121,7 @@ if (isset($_POST["submit"])) {
                         <i class="fas fa-user input-group-text  p-2 px-3"></i>
                     </div>
                     <input type="text" class="form-control" name="username" placeholder="username"
-                           id="username">
+                           id="username" required>
                 </div>
 
                 <label for="email">Email address</label>
@@ -128,7 +130,8 @@ if (isset($_POST["submit"])) {
                         <i class="fas fa-envelope input-group-text  p-2 px-3"></i>
                     </div>
                     <input type="email" class="form-control" name="email" placeholder="Email address"
-                           id="email">
+                           id="email" pattern="^[0-9a-zA-Z-_]+(\.?[0-9a-zA-Z-_])+@[a-zA-Z]+(\.[a-zA-Z]+)+$"
+                           title="Invalid email address" required>
                 </div>
 
                 <label for="password">Password</label>
@@ -137,7 +140,7 @@ if (isset($_POST["submit"])) {
                         <i class="fas fa-key input-group-text p-2 px-3"></i>
                     </div>
                     <input type="password" class="form-control" name="password" placeholder="Password"
-                           id="password">
+                           id="password" pattern="(.+){8,}" title="The password must be at least 8 characters" required>
                 </div>
 
                 <label for="confirm-password">Confirm password</label>
@@ -146,8 +149,8 @@ if (isset($_POST["submit"])) {
                         <i class="fas fa-key input-group-text p-2 px-3"></i>
                     </div>
                     <input type="password" class="form-control" name="confirm-password"
-                           id="confirm-password"
-                           placeholder="Confirm password">
+                           id="confirm-password" placeholder="Confirm password"
+                           pattern="(.+){8,}" title="The password must be at least 8 characters" required>
                 </div>
 
                 <label for="room-name">Room name</label>
