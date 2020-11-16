@@ -26,7 +26,7 @@ function validateEmail($email) {
     return preg_match($pattern, $email);
 }
 
-if (isset($_POST["submit"])) {
+if (isset($_POST["submit"]) && $_POST["submit"] == "Submit") {
     if (!isset($_POST["username"]) || strlen($_POST["username"]) < 1) {
         $_SESSION["error"] = "Username is required.";
         header("Location: /cafeteria/views/admin/user/add-user.php");
@@ -98,6 +98,29 @@ if (isset($_POST["submit"])) {
     header("Location: /cafeteria/views/admin/user/all_users.php");
     return;
 }
+
+if (isset($_POST["submit"]) && $_POST["submit"] == "Edit") {
+    // TODO: Edit user data in the database.
+}
+
+if (isset($_POST["submit"]) && $_POST["submit"] == "Cancel") {
+    // TODO: Go to all users page when clicking on cancel button.
+}
+
+$editMode = false;
+$pageHeader = "Add user";
+$username = "";
+$email = "";
+$roomId = 0;
+$extraInfo = "";
+$picture = "";
+if (isset($_GET["id"]) && !empty($_GET["id"])) {
+    $PAGE_TITLE="Edit user";
+    $pageHeader = "Edit user";
+    $editMode = true;
+
+    // TODO: Bring user data from database and populate it on the screen.
+}
 ?>
 
 <?php require_once "../../../templates/header.php"?>
@@ -106,7 +129,7 @@ if (isset($_POST["submit"])) {
     <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-5 mx-auto">
             <form method="POST" class="form mb-4" enctype="multipart/form-data">
-                <h1 class="form__header text-center mt-3 mb-4">Add user</h1>
+                <h1 class="form__header text-center mt-3 mb-4"><?= $pageHeader ?></h1>
 
                 <?php
                 if (isset($_SESSION["error"])) {
@@ -183,10 +206,17 @@ if (isset($_POST["submit"])) {
                 </div>
 
                 <div class="input-group d-flex justify-content-center">
-                    <input class="btn btn-primary m-2 px-4" type="submit" name="submit" id="submit"
-                           value="Submit">
-                    <input class="btn btn-secondary m-2 px-4" type="reset" name="reset" id="reset"
-                           value="Reset">
+                    <?php if ($editMode) { ?>
+                        <input class="btn btn-primary m-2 px-4" type="submit" name="submit" id="edit"
+                               value="Edit">
+                        <input class="btn btn-secondary m-2 px-4" type="submit" name="submit" id="cancel"
+                               value="Cancel">
+                    <?php } else { ?>
+                        <input class="btn btn-primary m-2 px-4" type="submit" name="submit" id="submit"
+                               value="Submit">
+                        <input class="btn btn-secondary m-2 px-4" type="reset" name="reset" id="reset"
+                               value="Reset">
+                    <?php } ?>
                 </div>
             </form>
         </div>
