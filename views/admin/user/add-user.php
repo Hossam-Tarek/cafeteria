@@ -95,7 +95,7 @@ if (isset($_POST["submit"])) {
         $conn->rollBack();
         $_SESSION["error"] = "Cannot save user data, please contact support.";
     }
-    header("Location: /cafeteria/views/admin/user/add-user.php");
+    header("Location: /cafeteria/views/admin/user/all_users.php");
     return;
 }
 ?>
