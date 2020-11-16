@@ -47,24 +47,54 @@ if (isset($_POST["submit"])) {
         header("Location: /cafeteria/views/admin/user/add-user.php");
         return;
     }
-    if (!isset($_POST["room-name"]) || $_POST["room-name"] == 0) {
+    if (!isset($_POST["room-id"]) || $_POST["room-id"] == 0) {
         $_SESSION["error"] = "Room name is required";
         header("Location: /cafeteria/views/admin/user/add-user.php");
         return;
     }
 
     // Upload user picture.
-    $picture = $_FILES["picture"];
-    $dir = "../../../images/avatars/";
-    $name = $_POST["email"] . "." . strtolower(pathinfo($picture["name"], PATHINFO_EXTENSION));
-    $path = $dir . $name;
+    if (isset($_FILES["picture"])) {
+        $picture = $_FILES["picture"];
+        $dir = "../../../images/avatars/";
+        $pictureName = $_POST["email"] . "." . strtolower(pathinfo($picture["name"], PATHINFO_EXTENSION));
+        $path = $dir . $pictureName;
 
-    if ($picture["size"] == 0 || $picture["size"] > 5000000) {
-        $_SESSION["error"] = "Picture is too large choose another one and try again.";
-        header("Location: /cafeteria/views/admin/user/add-user.php");
-        return;
+        // Check if the picture exists.
+        if ($picture["tmp_name"]) {
+            if ($picture["size"] == 0 || $picture["size"] > 5000000) {
+                $_SESSION["error"] = "Picture is too large choose another one and try again.";
+                header("Location: /cafeteria/views/admin/user/add-user.php");
+                return;
+            }
+            move_uploaded_file($picture["tmp_name"], $path);
+        } else {
+            $pictureName = null;
+        }
     }
-    move_uploaded_file($picture["tmp_name"], $path);
+
+    $sql = "INSERT INTO User (name, email, password, room_id, extra_info, avatar) VALUES
+            (:name, :email, :password, :room_id, :extra_info, :avatar)";
+
+    $stm = $conn->prepare($sql);
+    $stm->bindValue(":name", $_POST["username"], PDO::PARAM_STR);
+    $stm->bindValue(":email", $_POST["email"], PDO::PARAM_STR);
+    $stm->bindValue(":password", md5($_POST["password"]), PDO::PARAM_STR);
+    $stm->bindValue(":room_id", $_POST["room-id"], PDO::PARAM_INT);
+    $stm->bindValue(":extra_info", $_POST["extra-info"],
+        $_POST["extra-info"] ? PDO::PARAM_STR : PDO::PARAM_NULL);
+    $stm->bindValue(":avatar", $pictureName,
+        $_POST["extra-info"] ? PDO::PARAM_STR : PDO::PARAM_NULL);
+
+    $conn->beginTransaction();
+    if ($stm->execute()) {
+        $conn->commit();
+    } else {
+        $conn->rollBack();
+        $_SESSION["error"] = "Cannot save user data, please contact support.";
+    }
+    header("Location: /cafeteria/views/admin/user/add-user.php");
+    return;
 }
 ?>
 
@@ -125,7 +155,7 @@ if (isset($_POST["submit"])) {
                     <div class="input-group-prepend">
                         <i class="fas fa-door-open input-group-text p-2 px-3"></i>
                     </div>
-                    <select class="custom-select" id="room-name" name="room-name">
+                    <select class="custom-select" id="room-name" name="room-id">
                         <option value="0" selected>--Please choose a room name--</option>
                         <?php
                             $sql = "SELECT * FROM Room";
