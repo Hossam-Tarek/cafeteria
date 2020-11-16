@@ -103,10 +103,6 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Edit") {
     // TODO: Edit user data in the database.
 }
 
-if (isset($_POST["submit"]) && $_POST["submit"] == "Cancel") {
-    // TODO: Go to all users page when clicking on cancel button.
-}
-
 $editMode = false;
 $pageHeader = "Add user";
 $username = "";
@@ -228,8 +224,10 @@ if (isset($_GET["id"]) && !empty($_GET["id"])) {
                     <?php if ($editMode) { ?>
                         <input class="btn btn-primary m-2 px-4" type="submit" name="submit" id="edit"
                                value="Edit">
-                        <input class="btn btn-secondary m-2 px-4" type="submit" name="submit" id="cancel"
-                               value="Cancel">
+                        <a href="all_users.php">
+                            <input class="btn btn-secondary m-2 px-4" type="button" name="submit" id="cancel"
+                                   value="Cancel">
+                        </a>
                     <?php } else { ?>
                         <input class="btn btn-primary m-2 px-4" type="submit" name="submit" id="submit"
                                value="Submit">
