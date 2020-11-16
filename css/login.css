@@ -1,12 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900');
-
 :root {
     --input-padding-x: 0.75rem;
     --input-padding-y: 0.65rem;
 }
 
 body {
-    font-family: Poppins, sans-serif;
+    font-family: var(--primary-font-family);
     height: 100vh;
     display: flex;
     align-items: center;
@@ -23,7 +21,7 @@ body {
 }
 
 .logo__text {
-    color: #666666;
+    color: var(--secondary-font-color);
     cursor: pointer;
     font-weight: 500;
 }
