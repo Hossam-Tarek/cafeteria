@@ -33,7 +33,7 @@
                 "<td> ".ValidateData($category['name'])."</td>".
                 "<td>
                 <a data-category=".$category['category_id']." class='deletecategory btn btn-danger mt-4'>Delete</a>
-                    <a href='editcategory.php?id=".$category['category_id']."' class='btn btn-primary mt-4'>Update</a></td></tr>";      
+                    <a href='editcategory.php?id=".$category['category_id']."' class='btn btn-primary mt-4'>Edit</a></td></tr>";      
                 }
                 echo "</table>";
                 echo "</div></div >";

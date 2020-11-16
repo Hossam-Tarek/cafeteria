@@ -25,4 +25,8 @@ $(document).ready(function(){
         xml.open('GET',url+id,true);
         xml.send();
     }
+    // Stylish When Error Apear
+    $('.error').prev().css({
+        'border':"1px solid red"
+    });
 })
