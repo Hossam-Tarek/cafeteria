@@ -94,21 +94,22 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Submit") {
     } else {
         $conn->rollBack();
         $_SESSION["error"] = "Cannot save user data, please contact support.";
+        header("Location: /cafeteria/views/admin/user/add-user.php");
+        return;
     }
     header("Location: /cafeteria/views/admin/user/all_users.php");
     return;
 }
 
-if (isset($_POST["submit"]) && $_POST["submit"] == "Edit") {
-    // TODO: Edit user data in the database.
-}
-
 $editMode = false;
 $pageHeader = "Add user";
+$userId = 0;
 $username = "";
 $email = "";
+$password = "";
 $roomId = 0;
 $extraInfo = "";
+$picture = "";
 if (isset($_GET["id"]) && !empty($_GET["id"])) {
     $PAGE_TITLE="Edit user";
     $pageHeader = "Edit user";
@@ -120,16 +121,104 @@ if (isset($_GET["id"]) && !empty($_GET["id"])) {
 
     $stm->execute();
     if ($user = $stm->fetch(PDO::FETCH_ASSOC)) {
+        $userId = $user["user_id"];
         $username = $user["name"];
         $email = $user["email"];
+        $password = $user["password"];
         $roomId = $user["room_id"];
         $extraInfo = $user["extra_info"];
+        $picture = $user["avatar"];
     } else {
         $_SESSION["error"] = "This user does not exist in the database.";
         $PAGE_TITLE="Add user";
         $pageHeader = "Add user";
         $editMode = false;
     }
+}
+
+if (isset($_POST["submit"]) && $_POST["submit"] == "Edit") {
+    if (empty($_POST["username"])) {
+        $_SESSION["error"] = "Username is required.";
+        header("Location: /cafeteria/views/admin/user/add-user.php?id=" . $userId);
+        return;
+    } else {
+        $username = $_POST["username"];
+    }
+
+    if (empty($_POST["email"]) || !validateEmail($_POST["email"])) {
+        $_SESSION["error"] = "Invalid email address.";
+        header("Location: /cafeteria/views/admin/user/add-user.php?id=" . $userId);
+        return;
+    } else {
+        $email = $_POST["email"];
+    }
+
+    if (empty($_POST["password"]) || !validatePassword($_POST["password"])) {
+        $_SESSION["error"] = "Password must be not less than 8 characters.";
+        header("Location: /cafeteria/views/admin/user/add-user.php?id=" . $userId);
+        return;
+    } else {
+        $password = md5($_POST["password"]);
+    }
+
+    if (empty($_POST["confirm-password"]) || md5($_POST["confirm-password"]) != $password) {
+        $_SESSION["error"] = "Password and confirm password must match.";
+        header("Location: /cafeteria/views/admin/user/add-user.php?id=" . $userId);
+        return;
+    }
+
+    if (empty($_POST["room-id"]) || $_POST["room-id"] == 0) {
+        $_SESSION["error"] = "Room name is required";
+        header("Location: /cafeteria/views/admin/user/add-user.php");
+        return;
+    } else {
+        $roomId = $_POST["room-id"];
+    }
+
+    $extraInfo = $_POST["extra-info"];
+
+    // Upload user picture.
+    if (isset($_FILES["picture"])) {
+        $newPicture = $_FILES["picture"];
+        $dir = "../../../images/avatars/";
+        $pictureName = $_POST["email"] . "." . strtolower(pathinfo($newPicture["name"], PATHINFO_EXTENSION));
+        $path = $dir . $pictureName;
+
+        if ($newPicture["size"] == 0 || $newPicture["size"] > 5000000) {
+            $_SESSION["error"] = "Picture is too large choose another one and try again.";
+            header("Location: /cafeteria/views/admin/user/add-user.php");
+            return;
+        }
+        if (!empty($picture)) {
+            unlink($dir . $picture);
+        }
+        move_uploaded_file($newPicture["tmp_name"], $path);
+        $picture = $pictureName;
+    }
+
+    $sql = "UPDATE User SET
+            name = :name,
+            email = :email,
+            password = :password,
+            room_id = :room_id,
+            extra_info = :extra_info,
+            avatar = :avatar
+            WHERE user_id = :user_id";
+
+    $stm = $conn->prepare($sql);
+    $stm->bindValue(":name", $username, PDO::PARAM_STR);
+    $stm->bindValue(":email", $email, PDO::PARAM_STR);
+    $stm->bindValue(":password", $password, PDO::PARAM_STR);
+    $stm->bindValue(":room_id", $roomId, PDO::PARAM_INT);
+    $stm->bindValue(":extra_info", $extraInfo,
+        $extraInfo ? PDO::PARAM_STR : PDO::PARAM_NULL);
+    $stm->bindValue(":avatar", $picture,
+        $picture ? PDO::PARAM_STR : PDO::PARAM_NULL);
+    $stm->bindValue(":user_id", $userId, PDO::PARAM_INT);
+
+    var_dump($stm->execute());
+    header("Location: /cafeteria/views/admin/user/all_users.php");
+    return;
 }
 ?>
 
