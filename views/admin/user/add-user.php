@@ -113,13 +113,27 @@ $username = "";
 $email = "";
 $roomId = 0;
 $extraInfo = "";
-$picture = "";
 if (isset($_GET["id"]) && !empty($_GET["id"])) {
     $PAGE_TITLE="Edit user";
     $pageHeader = "Edit user";
     $editMode = true;
 
-    // TODO: Bring user data from database and populate it on the screen.
+    $sql = "SELECT * FROM User WHERE user_id = :user_id";
+    $stm = $conn->prepare($sql);
+    $stm->bindValue(":user_id", $_GET["id"], PDO::PARAM_INT);
+
+    $stm->execute();
+    if ($user = $stm->fetch(PDO::FETCH_ASSOC)) {
+        $username = $user["name"];
+        $email = $user["email"];
+        $roomId = $user["room_id"];
+        $extraInfo = $user["extra_info"];
+    } else {
+        $_SESSION["error"] = "This user does not exist in the database.";
+        $PAGE_TITLE="Add user";
+        $pageHeader = "Add user";
+        $editMode = false;
+    }
 }
 ?>
 
@@ -144,7 +158,7 @@ if (isset($_GET["id"]) && !empty($_GET["id"])) {
                         <i class="fas fa-user input-group-text  p-2 px-3"></i>
                     </div>
                     <input type="text" class="form-control" name="username" placeholder="username"
-                           id="username" required>
+                           id="username" value="<?= htmlentities($username) ?>" required>
                 </div>
 
                 <label for="email">Email address</label>
@@ -154,7 +168,7 @@ if (isset($_GET["id"]) && !empty($_GET["id"])) {
                     </div>
                     <input type="email" class="form-control" name="email" placeholder="Email address"
                            id="email" pattern="^[0-9a-zA-Z-_]+(\.?[0-9a-zA-Z-_])+@[a-zA-Z]+(\.[a-zA-Z]+)+$"
-                           title="Invalid email address" required>
+                           title="Invalid email address" value="<?= htmlentities($email) ?>" required>
                 </div>
 
                 <label for="password">Password</label>
@@ -188,7 +202,11 @@ if (isset($_GET["id"]) && !empty($_GET["id"])) {
                             $stm = $conn->prepare($sql);
                             $stm->execute();
                             while ($row = $stm->fetch(PDO::FETCH_ASSOC)) {
-                                echo "<option value='".$row["room_id"]."'>".$row["name"]."</option>";
+                                $selected = false;
+                                if ($roomId == $row["room_id"]) {
+                                    $selected = "selected";
+                                }
+                                echo "<option value='".$row["room_id"]."'$selected>".$row["name"] ."</option>";
                             }
                         ?>
                     </select>
@@ -197,7 +215,8 @@ if (isset($_GET["id"]) && !empty($_GET["id"])) {
                 <label for="extra-info">Extra info</label>
                 <div class="input-group mb-3">
                     <textarea name="extra-info" id="extra-info" cols="50" rows="5" class="form-control"
-                              maxlength="256" placeholder="Extra info about the user..."></textarea>
+                              placeholder="Extra info about the user..."
+                              maxlength="256"><?= htmlentities($extraInfo) ?></textarea>
                 </div>
 
                 <div class="input-group mb-3">
