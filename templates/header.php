@@ -1,20 +1,27 @@
 
 <?php
+
+// Start the session if it's not already started.
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 $name = "user";
-// session_start();
-// if(isset($_SESSION["name"])){
-//     $name = $_SESSION["name"];
-// }
-    require_once "../../database_connection.php";
-    function callback($buffer){
-        global $PAGE_TITLE, $PAGE_STYLESHEETS, $PAGE_SCRIPTS;
-        $buffer = preg_replace('/(<\s?title\s?>)(.*)(<\s?\/title\s?>)/i', '$1' . $PAGE_TITLE . '$3', $buffer); 
-        $buffer = preg_replace('/%STYLE_SHEETS%/i',$PAGE_STYLESHEETS , $buffer);
-        $buffer = preg_replace('/%PAGE_SCRIPTS%/i',$PAGE_SCRIPTS , $buffer); 
-        return $buffer;
-    }
-    ob_start("callback");
-?> 
+ if(isset($_SESSION["name"])){
+     $name = $_SESSION["name"];
+ }
+
+ require_once $_SERVER["DOCUMENT_ROOT"]."/database_connection.php";
+ function callback($buffer){
+     global $PAGE_TITLE, $PAGE_STYLESHEETS, $PAGE_SCRIPTS;
+     $buffer = preg_replace('/(<\s?title\s?>)(.*)(<\s?\/title\s?>)/i', '$1' . $PAGE_TITLE . '$3', $buffer);
+     $buffer = preg_replace('/%STYLE_SHEETS%/i',$PAGE_STYLESHEETS , $buffer);
+     $buffer = preg_replace('/%PAGE_SCRIPTS%/i',$PAGE_SCRIPTS , $buffer);
+     return $buffer;
+ }
+ ob_start("callback");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
