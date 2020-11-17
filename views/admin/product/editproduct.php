@@ -1,6 +1,6 @@
 <?php
      $PAGE_TITLE="Update Product";
-     $PAGE_STYLESHEETS = "";
+     $PAGE_STYLESHEETS = "<link rel='stylesheet' href='/cafeteria/css/admin/main.css'>";
      $PAGE_SCRIPTS = "<script src='/cafeteria/js/admin/main.js'></script>";
      require_once  "../../../templates/header.php"; 
      require_once "../../../database_connection.php";
@@ -85,7 +85,7 @@
         
         // Validation Success Then Start Update 
         if(empty($nameErr) && empty($priceErr) && empty($imgErr) && empty($categoryErr)){
-                move_uploaded_file($_FILES['image']['tmp_name'],$updated_image);
+                move_uploaded_file($_FILES['image']['tmp_name'],"../../../images/products/".$updated_image);
                 $stm3=$conn->prepare("UPDATE Product set name=?,price=?,category_id=?,image=? WHERE product_id=?");
                 $stm3->execute([$name,$price,$category_id,$updated_image,$id]);
                 $result=$stm3->fetch();
@@ -101,19 +101,13 @@
         <label for="product Name"> Name</label>
         <input type="text"  name="name" class="form-control" value="<?php echo $result['name']; ?>">
             <?php if (strlen($nameErr)>0){ ?> 
-                    <span class="error text-danger"
-                          style="display:block;float:right;position:relative;
-                          top: -33px;right: 24px;"
-                     ><?php echo $nameErr; ?></span>
+                    <span class="error text-danger"><?php echo $nameErr; ?></span>
             <?php } ?>
 
         <label for="Price"> Price</label>
         <input type="text"  name="price" class="form-control" value="<?php echo $result['price']; ?>">
             <?php if (strlen($priceErr)>0){ ?> 
-                <span class="error text-danger"
-                          style="display:block;float:right;position:relative;
-                          top: -33px;right: 24px;"
-                ><?php echo $priceErr; ?></span>
+                <span class="error text-danger"><?php echo $priceErr; ?></span>
             <?php } ?>
 
         <label for="Category id"> Category Name</label>
@@ -128,20 +122,13 @@
                 ?>
         </select>
         <?php if (strlen($categoryErr)>0){ ?> 
-            <span class="error text-danger" 
-                          style="display:block;float:right;position:relative;
-                          top: -33px;right: 24px;"
-            ><?php echo $categoryErr; ?></span>
-
+            <span class="error text-danger"><?php echo $categoryErr; ?></span>
         <?php } ?>
 
         <label for="Image"> Image</label>
         <input type="file"  name="image" class="form-control">
         <?php if (strlen($imgErr)>0){ ?> 
-            <span class="error text-danger"
-                          style="display:block;float:right;position:relative;
-                          top: -33px;right: 24px;"
-            ><?php echo $imgErr; ?></span>
+            <span class="error text-danger"><?php echo $imgErr; ?></span>
         <?php } ?>
        
         <input type="submit" value="Update product" class="btn btn-group btn-success my-4">
