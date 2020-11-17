@@ -36,6 +36,7 @@
         if (empty($_POST["name"])) {
             $nameErr='Product is Required *';
         }else{
+            //Check Name To Be String
             if(preg_match("/^([a-zA-Z' ]+)$/",$name)){
                 $stmt2=$conn->prepare("SELECT * FROM Product WHERE name=?");
                 $stmt2->execute([$_POST['name']]);
@@ -72,9 +73,9 @@
             $imgErr="Please Chose An Image Not File"; 
             }
         }
-        // Validation Success Then Start Update 
+        // Validation Success Then Start Insert 
         if(empty($nameErr) && empty($priceErr) && empty($imgErr) && empty($categoryErr)){
-                move_uploaded_file($_FILES['image']['tmp_name'],"productimage/".$image);
+                move_uploaded_file($_FILES['image']['tmp_name'],"../../../images/products/".$image);
                 $stm3=$conn->prepare("INSERT INTO Product(name,price,category_id,image) 
                 VALUES(:name,:price,:category_id,:image)");
                 $stm3->bindParam(":name",$name);
@@ -94,8 +95,7 @@
         <input type="text"  name="name" class="form-control" >
             <?php if (strlen($nameErr)>0){ ?> 
                     <span class="error text-danger"
-                          style="display:block;float:right;position:relative;
-                          top: -33px;right: 24px;"
+                          
                      ><?php echo $nameErr; ?></span>
             <?php } ?>
 
@@ -103,8 +103,7 @@
         <input type="text"  name="price" class="form-control">
             <?php if (strlen($priceErr)>0){ ?> 
                 <span class="error text-danger"
-                          style="display:block;float:right;position:relative;
-                          top: -33px;right: 24px;"
+                          
                 ><?php echo $priceErr; ?></span>
             <?php } ?>
 
@@ -121,8 +120,7 @@
         </select>
         <?php if (strlen($categoryErr)>0){ ?> 
             <span class="error text-danger" 
-                          style="display:block;float:right;position:relative;
-                          top: -33px;right: 24px;"
+                          
             ><?php echo $categoryErr; ?></span>
 
         <?php } ?>
@@ -130,10 +128,7 @@
         <label for="Image"> Image</label>
         <input type="file"  name="image" class="form-control">
         <?php if (strlen($imgErr)>0){ ?> 
-            <span class="error text-danger"
-                          style="display:block;float:right;position:relative;
-                          top: -33px;right: 24px;"
-            ><?php echo $imgErr; ?></span>
+            <span class="error text-danger"><?php echo $imgErr; ?></span>
         <?php } ?>
        
         <input type="submit" value="Add product" class="btn btn-group btn-success my-4">
