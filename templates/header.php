@@ -19,7 +19,8 @@ $user = "admin";
     <title>Document</title>
     <link rel="stylesheet" href="/cafeteria/css/bootstrap.css">
     <link rel="stylesheet" href="/cafeteria/css/fontaswesme-all.min.css">
-    %STYLE_SHEETS% 
+    <link rel="stylesheet" href="/cafeteria/css/scheme.css">
+    %STYLE_SHEETS%
 </head>
 <body>
     <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
