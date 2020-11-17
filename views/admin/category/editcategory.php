@@ -32,12 +32,16 @@
         if (empty($_POST["name"])) {
             $nameErr='Category is Required *';
         }else{
-            $stmt2=$conn->prepare("SELECT * FROM Category WHERE name=?");
-            $stmt2->execute([$_POST['name']]);
-            $return=$stmt2->fetch();
-            $count=$stmt2->rowCount();
-            if($count > 0 && $_POST['id'] != $return['category_id']){
-                $nameErr='Category Already Existed';
+            if(preg_match("/^([a-zA-Z' ]+)$/",$name)){
+                $stmt2=$conn->prepare("SELECT * FROM Category WHERE name=?");
+                $stmt2->execute([$_POST['name']]);
+                $return=$stmt2->fetch();
+                $count=$stmt2->rowCount();
+                if($count > 0 && $_POST['id'] != $return['category_id']){
+                    $nameErr='Category Already Existed';
+                }
+            }else{
+                $nameErr='Invalid name given.';
             }
         }
 
