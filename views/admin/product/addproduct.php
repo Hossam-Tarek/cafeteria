@@ -1,11 +1,11 @@
 <?php
+
+    require_once  "../../../templates/header.php";
+    require_once "../../../database_connection.php";
+
      $PAGE_TITLE="Add Product";
      $PAGE_STYLESHEETS = "<link rel='stylesheet' href='/cafeteria/css/admin/main.css'>";
      $PAGE_SCRIPTS = "<script src='/cafeteria/js/admin/main.js'></script>";
-     require_once  "../../../templates/header.php"; 
-     require_once "../../../database_connection.php";
-?>
-<?php 
     
     $nameErr=$name="";
     $priceErr=$price="";
@@ -14,10 +14,9 @@
     // Show Category Of Product 
     $stm2=$conn->prepare("SELECT * FROM Category");
     $stm2->execute();
-    while($row=$stm2->fetch(PDO::FETCH_ASSOC)){
-        $categories[]=$row;
-     }
-    // Cleaning of Input   
+
+    $categories=$stm2->fetchAll();
+
     function Clean($data){
         $data=htmlentities($data);
         $data=htmlspecialchars($data);
@@ -89,7 +88,7 @@
 ?>
 <div class="container">
     <h2 class="text-center my-3 text-secondary">Add product </h2>
-    <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" class="form-group" enctype="multipart/form-data">
+    <form method="post" class="form-group" enctype="multipart/form-data">
         
         <label for="product Name"> Name</label>
         <input type="text"  name="name" class="form-control" >
