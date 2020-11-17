@@ -12,6 +12,8 @@ $PAGE_TITLE="Add User";
 $PAGE_STYLESHEETS = "<link rel='stylesheet' href='/cafeteria/css/admin/add-user.css'>";
 $PAGE_SCRIPTS = "";
 
+define("VALID_EXTENSIONS", ["jpeg", "jpg", "png"]);
+
 // Validate password must be not less than 8 characters.
 function validatePassword($password) {
     if (strlen($password) < 8) {
@@ -26,7 +28,7 @@ function validateEmail($email) {
     return preg_match($pattern, $email);
 }
 
-if (isset($_POST["submit"])) {
+if (isset($_POST["submit"]) && $_POST["submit"] == "Submit") {
     if (!isset($_POST["username"]) || strlen($_POST["username"]) < 1) {
         $_SESSION["error"] = "Username is required.";
         header("Location: /cafeteria/views/admin/user/add-user.php");
@@ -56,8 +58,16 @@ if (isset($_POST["submit"])) {
     // Upload user picture.
     if (isset($_FILES["picture"])) {
         $picture = $_FILES["picture"];
+        $extension = strtolower(pathinfo($picture["name"], PATHINFO_EXTENSION));
+
+        if (!in_array($extension, VALID_EXTENSIONS)) {
+            $_SESSION["error"] = "The file doesn't have a valid extension.";
+            header("Location: /cafeteria/views/admin/user/add-user.php");
+            return;
+        }
+
         $dir = "../../../images/avatars/";
-        $pictureName = $_POST["email"] . "." . strtolower(pathinfo($picture["name"], PATHINFO_EXTENSION));
+        $pictureName = $_POST["email"] . "." . $extension;
         $path = $dir . $pictureName;
 
         // Check if the picture exists.
@@ -94,7 +104,137 @@ if (isset($_POST["submit"])) {
     } else {
         $conn->rollBack();
         $_SESSION["error"] = "Cannot save user data, please contact support.";
+        header("Location: /cafeteria/views/admin/user/add-user.php");
+        return;
     }
+    header("Location: /cafeteria/views/admin/user/all_users.php");
+    return;
+}
+
+$editMode = false;
+$pageHeader = "Add user";
+$userId = 0;
+$username = "";
+$email = "";
+$password = "";
+$roomId = 0;
+$extraInfo = "";
+$picture = "";
+if (isset($_GET["id"]) && !empty($_GET["id"])) {
+    $PAGE_TITLE="Edit user";
+    $pageHeader = "Edit user";
+    $editMode = true;
+
+    $sql = "SELECT * FROM User WHERE user_id = :user_id";
+    $stm = $conn->prepare($sql);
+    $stm->bindValue(":user_id", $_GET["id"], PDO::PARAM_INT);
+
+    $stm->execute();
+    if ($user = $stm->fetch(PDO::FETCH_ASSOC)) {
+        $userId = $user["user_id"];
+        $username = $user["name"];
+        $email = $user["email"];
+        $password = $user["password"];
+        $roomId = $user["room_id"];
+        $extraInfo = $user["extra_info"];
+        $picture = $user["avatar"];
+    } else {
+        $_SESSION["error"] = "This user does not exist in the database.";
+        $PAGE_TITLE="Add user";
+        $pageHeader = "Add user";
+        $editMode = false;
+    }
+}
+
+if (isset($_POST["submit"]) && $_POST["submit"] == "Edit") {
+    if (empty($_POST["username"])) {
+        $_SESSION["error"] = "Username is required.";
+        header("Location: /cafeteria/views/admin/user/add-user.php?id=" . $userId);
+        return;
+    } else {
+        $username = $_POST["username"];
+    }
+
+    if (empty($_POST["email"]) || !validateEmail($_POST["email"])) {
+        $_SESSION["error"] = "Invalid email address.";
+        header("Location: /cafeteria/views/admin/user/add-user.php?id=" . $userId);
+        return;
+    } else {
+        $email = $_POST["email"];
+    }
+
+    if (empty($_POST["password"]) || !validatePassword($_POST["password"])) {
+        $_SESSION["error"] = "Password must be not less than 8 characters.";
+        header("Location: /cafeteria/views/admin/user/add-user.php?id=" . $userId);
+        return;
+    } else {
+        $password = md5($_POST["password"]);
+    }
+
+    if (empty($_POST["confirm-password"]) || md5($_POST["confirm-password"]) != $password) {
+        $_SESSION["error"] = "Password and confirm password must match.";
+        header("Location: /cafeteria/views/admin/user/add-user.php?id=" . $userId);
+        return;
+    }
+
+    if (empty($_POST["room-id"]) || $_POST["room-id"] == 0) {
+        $_SESSION["error"] = "Room name is required";
+        header("Location: /cafeteria/views/admin/user/add-user.php");
+        return;
+    } else {
+        $roomId = $_POST["room-id"];
+    }
+
+    $extraInfo = $_POST["extra-info"];
+
+    // Upload user picture.
+    if (isset($_FILES["picture"])) {
+        $newPicture = $_FILES["picture"];
+        $extension = strtolower(pathinfo($newPicture["name"], PATHINFO_EXTENSION));
+
+        if (!in_array($extension, VALID_EXTENSIONS)) {
+            $_SESSION["error"] = "The file doesn't have a valid extension.";
+            header("Location: /cafeteria/views/admin/user/add-user.php");
+            return;
+        }
+
+        $dir = "../../../images/avatars/";
+        $pictureName = $_POST["email"] . "." . $extension;
+        $path = $dir . $pictureName;
+
+        if ($newPicture["size"] == 0 || $newPicture["size"] > 5000000) {
+            $_SESSION["error"] = "Picture is too large choose another one and try again.";
+            header("Location: /cafeteria/views/admin/user/add-user.php");
+            return;
+        }
+        if (!empty($picture)) {
+            unlink($dir . $picture);
+        }
+        move_uploaded_file($newPicture["tmp_name"], $path);
+        $picture = $pictureName;
+    }
+
+    $sql = "UPDATE User SET
+            name = :name,
+            email = :email,
+            password = :password,
+            room_id = :room_id,
+            extra_info = :extra_info,
+            avatar = :avatar
+            WHERE user_id = :user_id";
+
+    $stm = $conn->prepare($sql);
+    $stm->bindValue(":name", $username, PDO::PARAM_STR);
+    $stm->bindValue(":email", $email, PDO::PARAM_STR);
+    $stm->bindValue(":password", $password, PDO::PARAM_STR);
+    $stm->bindValue(":room_id", $roomId, PDO::PARAM_INT);
+    $stm->bindValue(":extra_info", $extraInfo,
+        $extraInfo ? PDO::PARAM_STR : PDO::PARAM_NULL);
+    $stm->bindValue(":avatar", $picture,
+        $picture ? PDO::PARAM_STR : PDO::PARAM_NULL);
+    $stm->bindValue(":user_id", $userId, PDO::PARAM_INT);
+
+    var_dump($stm->execute());
     header("Location: /cafeteria/views/admin/user/all_users.php");
     return;
 }
@@ -106,7 +246,7 @@ if (isset($_POST["submit"])) {
     <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-5 mx-auto">
             <form method="POST" class="form mb-4" enctype="multipart/form-data">
-                <h1 class="form__header text-center mt-3 mb-4">Add user</h1>
+                <h1 class="form__header text-center mt-3 mb-4"><?= $pageHeader ?></h1>
 
                 <?php
                 if (isset($_SESSION["error"])) {
@@ -121,7 +261,7 @@ if (isset($_POST["submit"])) {
                         <i class="fas fa-user input-group-text  p-2 px-3"></i>
                     </div>
                     <input type="text" class="form-control" name="username" placeholder="username"
-                           id="username" required>
+                           id="username" value="<?= htmlentities($username) ?>" required>
                 </div>
 
                 <label for="email">Email address</label>
@@ -131,7 +271,7 @@ if (isset($_POST["submit"])) {
                     </div>
                     <input type="email" class="form-control" name="email" placeholder="Email address"
                            id="email" pattern="^[0-9a-zA-Z-_]+(\.?[0-9a-zA-Z-_])+@[a-zA-Z]+(\.[a-zA-Z]+)+$"
-                           title="Invalid email address" required>
+                           title="Invalid email address" value="<?= htmlentities($email) ?>" required>
                 </div>
 
                 <label for="password">Password</label>
@@ -165,7 +305,11 @@ if (isset($_POST["submit"])) {
                             $stm = $conn->prepare($sql);
                             $stm->execute();
                             while ($row = $stm->fetch(PDO::FETCH_ASSOC)) {
-                                echo "<option value='".$row["room_id"]."'>".$row["name"]."</option>";
+                                $selected = false;
+                                if ($roomId == $row["room_id"]) {
+                                    $selected = "selected";
+                                }
+                                echo "<option value='".$row["room_id"]."'$selected>".$row["name"] ."</option>";
                             }
                         ?>
                     </select>
@@ -174,7 +318,8 @@ if (isset($_POST["submit"])) {
                 <label for="extra-info">Extra info</label>
                 <div class="input-group mb-3">
                     <textarea name="extra-info" id="extra-info" cols="50" rows="5" class="form-control"
-                              maxlength="256" placeholder="Extra info about the user..."></textarea>
+                              placeholder="Extra info about the user..."
+                              maxlength="256"><?= htmlentities($extraInfo) ?></textarea>
                 </div>
 
                 <div class="input-group mb-3">
@@ -183,10 +328,19 @@ if (isset($_POST["submit"])) {
                 </div>
 
                 <div class="input-group d-flex justify-content-center">
-                    <input class="btn btn-primary m-2 px-4" type="submit" name="submit" id="submit"
-                           value="Submit">
-                    <input class="btn btn-secondary m-2 px-4" type="reset" name="reset" id="reset"
-                           value="Reset">
+                    <?php if ($editMode) { ?>
+                        <input class="btn btn-primary m-2 px-4" type="submit" name="submit" id="edit"
+                               value="Edit">
+                        <a href="all_users.php">
+                            <input class="btn btn-secondary m-2 px-4" type="button" name="submit" id="cancel"
+                                   value="Cancel">
+                        </a>
+                    <?php } else { ?>
+                        <input class="btn btn-primary m-2 px-4" type="submit" name="submit" id="submit"
+                               value="Submit">
+                        <input class="btn btn-secondary m-2 px-4" type="reset" name="reset" id="reset"
+                               value="Reset">
+                    <?php } ?>
                 </div>
             </form>
         </div>
