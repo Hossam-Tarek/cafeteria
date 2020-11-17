@@ -12,6 +12,8 @@ $PAGE_TITLE="Add User";
 $PAGE_STYLESHEETS = "<link rel='stylesheet' href='/cafeteria/css/admin/add-user.css'>";
 $PAGE_SCRIPTS = "";
 
+define("VALID_EXTENSIONS", ["jpeg", "jpg", "png"]);
+
 // Validate password must be not less than 8 characters.
 function validatePassword($password) {
     if (strlen($password) < 8) {
@@ -56,8 +58,16 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Submit") {
     // Upload user picture.
     if (isset($_FILES["picture"])) {
         $picture = $_FILES["picture"];
+        $extension = strtolower(pathinfo($picture["name"], PATHINFO_EXTENSION));
+
+        if (!in_array($extension, VALID_EXTENSIONS)) {
+            $_SESSION["error"] = "The file doesn't have a valid extension.";
+            header("Location: /cafeteria/views/admin/user/add-user.php");
+            return;
+        }
+
         $dir = "../../../images/avatars/";
-        $pictureName = $_POST["email"] . "." . strtolower(pathinfo($picture["name"], PATHINFO_EXTENSION));
+        $pictureName = $_POST["email"] . "." . $extension;
         $path = $dir . $pictureName;
 
         // Check if the picture exists.
@@ -180,8 +190,16 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Edit") {
     // Upload user picture.
     if (isset($_FILES["picture"])) {
         $newPicture = $_FILES["picture"];
+        $extension = strtolower(pathinfo($newPicture["name"], PATHINFO_EXTENSION));
+
+        if (!in_array($extension, VALID_EXTENSIONS)) {
+            $_SESSION["error"] = "The file doesn't have a valid extension.";
+            header("Location: /cafeteria/views/admin/user/add-user.php");
+            return;
+        }
+
         $dir = "../../../images/avatars/";
-        $pictureName = $_POST["email"] . "." . strtolower(pathinfo($newPicture["name"], PATHINFO_EXTENSION));
+        $pictureName = $_POST["email"] . "." . $extension;
         $path = $dir . $pictureName;
 
         if ($newPicture["size"] == 0 || $newPicture["size"] > 5000000) {
