@@ -12,8 +12,7 @@
     $imgErr=$image="";
     $categoryErr=$category="";
     // Show Category Of Product 
-    $con=new PDO('mysql:host=localhost;dbname=cafeteria;','root','');
-    $stm2=$con->prepare("SELECT * FROM category");
+    $stm2=$conn->prepare("SELECT * FROM Category");
     $stm2->execute();
     while($row=$stm2->fetch(PDO::FETCH_ASSOC)){
         $categories[]=$row;
@@ -38,8 +37,7 @@
             $nameErr='Product is Required *';
         }else{
             if(preg_match("/^([a-zA-Z' ]+)$/",$name)){
-                $con=new PDO('mysql:host=localhost;dbname=cafeteria;','root','');
-                $stmt2=$con->prepare("SELECT * FROM Product WHERE name=?");
+                $stmt2=$conn->prepare("SELECT * FROM Product WHERE name=?");
                 $stmt2->execute([$_POST['name']]);
                 $return=$stmt2->fetch();
                 $count=$stmt2->rowCount();
@@ -77,8 +75,7 @@
         // Validation Success Then Start Update 
         if(empty($nameErr) && empty($priceErr) && empty($imgErr) && empty($categoryErr)){
                 move_uploaded_file($_FILES['image']['tmp_name'],"productimage/".$image);
-                $con=new PDO('mysql:host=localhost;dbname=cafeteria;','root','');
-                $stm3=$con->prepare("INSERT INTO Product(name,price,category_id,image) 
+                $stm3=$conn->prepare("INSERT INTO Product(name,price,category_id,image) 
                 VALUES(:name,:price,:category_id,:image)");
                 $stm3->bindParam(":name",$name);
                 $stm3->bindParam(":price",$price);
