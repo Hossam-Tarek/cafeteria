@@ -1,4 +1,11 @@
+
 <?php
+$name = "user";
+// session_start();
+// if(isset($_SESSION["name"])){
+//     $name = $_SESSION["name"];
+// }
+    require_once "../../database_connection.php";
     function callback($buffer){
         global $PAGE_TITLE, $PAGE_STYLESHEETS, $PAGE_SCRIPTS;
         $buffer = preg_replace('/(<\s?title\s?>)(.*)(<\s?\/title\s?>)/i', '$1' . $PAGE_TITLE . '$3', $buffer); 
@@ -8,9 +15,6 @@
     }
     ob_start("callback");
 ?> 
-<?php
-$user = "admin";
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,25 +34,35 @@ $user = "admin";
         <div class="collapse navbar-collapse" id="navbar-list-4">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item"><a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a></li>
-                <?php if (isset($admin)): ?>
+                <?php if ($name == "Admin"): ?>
                 <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
-                <li class="nav-item"><a class="nav-link " href="#" >Users</a></li>
+                <li class="nav-item"><a class="nav-link " href="views/admin/user/all_users.php">Users</a></li>
                 <li class="nav-item"><a class="nav-link" href="#" >Manual Order</a></li>
                 <li class="nav-item"><a class="nav-link" href="#" >Checks</a></li>
                 <?php endif?>
-                <?php if (isset($user)): ?>             
-                <li class="nav-item"><a class="nav-link" href="#" >My Orders</a></li>
+                <?php if ($name != "Admin"): ?>             
+                <li class="nav-item"><a class="nav-link" href="/cafeteria/views/user/user-orders.php" >My Orders</a></li>
                 <?php endif?>
                 </ul>
-
+            <?php
+                if($name != "Admin" && isset($_SESSION["email"])){
+                    $sql = "SELECT avatar FROM User WHERE email= :email";
+                    $statement = $conn->prepare($sql);
+                    $statement->bindValue(":email", $_SESSION["email"] , PDO::PARAM_STR);
+                    $statement->execute();
+                    $row = $statement->fetch(PDO::FETCH_ASSOC);
+                }
+            ?>    
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                        <img src="/cafeteria/img/1.jpg" width="40" height="40" class="rounded-circle">
+                        <img src="/cafeteria/images/avatars/<?php echo (isset($row['avatar']) ? $row['avatar'] : 'avatar2.png'); ?>" width="40" height="40" class="rounded-circle">
                    </a>
                 </li>
-                <li class="nav-item mt-2 nav-link"><?php if (isset($user)) {echo "Waheed";} 
-                                                        else {echo "Admin";}?></li>
+                <li class="nav-item mt-2 nav-link"><?php echo $name;  ?></li>
+                <li class="nav-item mt-2 nav-link"><a class="nav-link mt-n2" href="../../logout.php">Log Out<a></li>
+
             </ul>
         </div>
     </nav>
+    
