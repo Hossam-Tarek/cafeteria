@@ -7,7 +7,7 @@
 ?>
 <div class="container">
     <h1 class="text-center my-3">All Categories</h1>
-    <a href="#" class="btn btn-success mb-4 ">Add New Category</a>
+    <a href="addcategory.php" class="btn btn-success mb-4 ">Add New Category</a>
     <?php
         function ValidateData($data){
             $data=htmlentities($data);
