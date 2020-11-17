@@ -23,8 +23,7 @@
         $nameErr='Category is Required *';
     }else{
         if(preg_match("/^([a-zA-Z' ]+)$/",$name)){
-            $con=new PDO('mysql:host=localhost;dbname=cafeteria;','root','');
-            $stmt2=$con->prepare("SELECT * FROM Category WHERE name=?");
+            $stmt2=$conn->prepare("SELECT * FROM Category WHERE name=?");
             $stmt2->execute([$_POST['name']]);
             $return=$stmt2->fetch();
             $count=$stmt2->rowCount();
@@ -38,8 +37,7 @@
    
     // Validation Success Then Start Updating 
     if(empty($nameErr)){
-            $con=new PDO('mysql:host=localhost;dbname=cafeteria;','root','');
-            $stm3=$con->prepare("INSERT INTO Category (name) VALUES (?)");
+            $stm3=$conn->prepare("INSERT INTO Category (name) VALUES (?)");
             $stm3->execute([$name]);
             $result=$stm3->fetch();
             header('Location:allcategories.php');   
