@@ -35,7 +35,7 @@
         }
     }
    
-    // Validation Success Then Start Updating 
+    // Validation Success Then Start Inserting 
     if(empty($nameErr)){
             $stm3=$conn->prepare("INSERT INTO Category (name) VALUES (?)");
             $stm3->execute([$name]);
@@ -52,8 +52,7 @@
         <input type="text" name="name" class="form-control">
             <?php if (strlen($nameErr)>0){ ?> 
                 <span class="error text-danger"
-                          style="display:block;float:right;position:relative;
-                          top: -33px;right: 24px;"
+                         
                 ><?php echo $nameErr; ?></span>
             <?php } ?>
         <input type="submit" name="submit" value="Add Category" class="btn btn-group btn-success my-4">
