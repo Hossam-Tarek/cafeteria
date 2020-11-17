@@ -11,7 +11,7 @@ $name = "user";
      $name = $_SESSION["name"];
  }
 
- require_once $_SERVER["DOCUMENT_ROOT"]."/database_connection.php";
+ require_once __DIR__."/../database_connection.php";
  function callback($buffer){
      global $PAGE_TITLE, $PAGE_STYLESHEETS, $PAGE_SCRIPTS;
      $buffer = preg_replace('/(<\s?title\s?>)(.*)(<\s?\/title\s?>)/i', '$1' . $PAGE_TITLE . '$3', $buffer);

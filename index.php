@@ -1,6 +1,6 @@
 <?php
 
-// session_start();
+session_start();
 $PAGE_TITLE = "Cafeteria";
 $PAGE_STYLESHEETS = '<link rel="stylesheet" href="/cafeteria/css/main.css">';
 $PAGE_SCRIPTS = "";

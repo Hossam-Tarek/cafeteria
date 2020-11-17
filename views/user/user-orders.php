@@ -1,10 +1,10 @@
 <?php
+    session_start();
     $PAGE_TITLE = "UserOrder";
     $PAGE_STYLESHEETS = '<link rel="stylesheet" href="../../css/user/main.css">';
     $PAGE_SCRIPTS = '<script src="../../js/user/main.js"></script>';
     require_once "../../templates/header.php";
     require_once "../../database_connection.php";
-    session_start();
 
     $id;
     if (isset($_SESSION["email"]) && isset($_SESSION["account-type"])) {
