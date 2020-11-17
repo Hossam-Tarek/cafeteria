@@ -45,7 +45,7 @@
           "<td> "."<img width=100 height=100 style='border-radius:50%' src=".'../../../images/avatars/'.ValidateData($user['avatar']).">"."</td>".
           "<td>
               <a data-user=".$user['user_id']." class='deleteuser btn btn-danger mt-4'>Delete</a>
-              <a href='edituser.php?id=".$user['user_id']."' class='btn btn-primary mt-4'>Edit</a></td></tr>";      
+              <a href='add-user.php?id=".$user['user_id']."' class='btn btn-primary mt-4'>Edit</a></td></tr>";
           }
      echo "</table>";
       }    

@@ -2,3 +2,9 @@
 .success {
     color: #4bb543;
 }
+.error{
+    display:block;
+    float:right;
+    position:relative;
+    top: -33px;right: 24px;
+} 

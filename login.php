@@ -70,6 +70,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
     <title>Login</title>
 
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/scheme.css">
     <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
