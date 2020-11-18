@@ -2,6 +2,11 @@
 
 session_start();
 
+if (!isset($_SESSION["account-type"]) || $_SESSION["account-type"] !== "admin") {
+    header("Location: ../../index.php");
+    return;
+}
+
 $PAGE_TITLE = "Cafeteria";
 $PAGE_STYLESHEETS = '<link rel="stylesheet" href="/cafeteria/css/admin/main.css">';
 $PAGE_SCRIPTS = '<script src="/cafeteria/js/admin/main.js"></script>';
