@@ -56,7 +56,7 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Submit") {
     }
 
     // Upload user picture.
-    if (isset($_FILES["picture"])) {
+    if (!empty($_FILES["picture"]["name"])) {
         $picture = $_FILES["picture"];
         $extension = strtolower(pathinfo($picture["name"], PATHINFO_EXTENSION));
 
@@ -188,7 +188,7 @@ if (isset($_POST["submit"]) && $_POST["submit"] == "Edit") {
     $extraInfo = $_POST["extra-info"];
 
     // Upload user picture.
-    if (isset($_FILES["picture"])) {
+    if (!empty($_FILES["picture"]["name"])) {
         $newPicture = $_FILES["picture"];
         $extension = strtolower(pathinfo($newPicture["name"], PATHINFO_EXTENSION));
 
