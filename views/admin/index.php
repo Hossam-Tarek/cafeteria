@@ -13,11 +13,20 @@ $PAGE_TITLE = "Cafeteria";
 $PAGE_STYLESHEETS = '<link rel="stylesheet" href="/cafeteria/css/admin/main.css">';
 $PAGE_SCRIPTS = '<script src="/cafeteria/js/admin/main.js"></script>';
 
-$categoryNum = $conn->query("SELECT COUNT(*) as count FROM Category")->fetch()["count"];
-$orderNum = $conn->query("SELECT COUNT(*) as count FROM `Order`")->fetch()["count"];
-$productNum = $conn->query("SELECT COUNT(*) as count FROM Product")->fetch()["count"];
-$roomNum = $conn->query("SELECT COUNT(*) as count FROM Room")->fetch()["count"];
-$userNum = $conn->query("SELECT COUNT(*) as count FROM `User`")->fetch()["count"];
+function getNumber($table) {
+    global $conn;
+    $sql = "SELECT COUNT(*) as count FROM ".$table;
+    $stm = $conn->prepare($sql);
+    $stm->bindValue(":tableName", $table, PDO::PARAM_STR);
+    $stm->execute();
+    return $stm->fetch()["count"];
+}
+
+$categoryNum = getNumber("Category");
+$orderNum = getNumber("`Order`");
+$productNum = getNumber("Product");
+$roomNum = getNumber("Room");
+$userNum = getNumber("User");
 ?>
 
 <?php require_once "../../templates/header.php" ?>
