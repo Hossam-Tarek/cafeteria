@@ -29,4 +29,8 @@ $(document).ready(function(){
     $('.error').prev().css({
         'border':"1px solid red"
     });
+
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+    });
 })
