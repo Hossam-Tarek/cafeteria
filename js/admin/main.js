@@ -33,4 +33,9 @@ $(document).ready(function(){
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
     });
+
+    $(".card").on("click", function() {
+        console.log("card clicked.");
+        window.location.href = $(this).attr("data-link");
+    });
 })

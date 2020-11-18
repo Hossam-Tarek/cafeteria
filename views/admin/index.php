@@ -1,5 +1,7 @@
 <?php
 
+require_once "../../database_connection.php";
+
 session_start();
 
 if (!isset($_SESSION["account-type"]) || $_SESSION["account-type"] !== "admin") {
@@ -10,16 +12,15 @@ if (!isset($_SESSION["account-type"]) || $_SESSION["account-type"] !== "admin") 
 $PAGE_TITLE = "Cafeteria";
 $PAGE_STYLESHEETS = '<link rel="stylesheet" href="/cafeteria/css/admin/main.css">';
 $PAGE_SCRIPTS = '<script src="/cafeteria/js/admin/main.js"></script>';
+
+$categoryNum = $conn->query("SELECT COUNT(*) as count FROM Category")->fetch()["count"];
+$orderNum = $conn->query("SELECT COUNT(*) as count FROM `Order`")->fetch()["count"];
+$productNum = $conn->query("SELECT COUNT(*) as count FROM Product")->fetch()["count"];
+$roomNum = $conn->query("SELECT COUNT(*) as count FROM Room")->fetch()["count"];
+$userNum = $conn->query("SELECT COUNT(*) as count FROM `User`")->fetch()["count"];
 ?>
 
 <?php require_once "../../templates/header.php" ?>
-
-<?php
-if (isset($_SESSION["success"])) {
-    echo "<p class='success'>". $_SESSION["success"] ."</p>";
-    unset($_SESSION["success"]);
-}
-?>
 
 <div class="wrapper">
     <nav id="sidebar">
@@ -74,6 +75,57 @@ if (isset($_SESSION["success"])) {
         <button type="button" id="sidebarCollapse" class="btn btn-info">
             <i class="fas fa-align-left"></i>
         </button>
+
+        <?php
+        if (isset($_SESSION["success"])) {
+            echo "<p class='success'>". $_SESSION["success"] ."</p>";
+            unset($_SESSION["success"]);
+        }
+        ?>
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="card m-1" style="width: 16.5rem;" data-link="user/all_users.php">
+                    <div class="card-body">
+                        <i class="fas fa-users card-icon"></i>
+                        <h6 class="card-title text-muted">Users</h6>
+                        <p class="card-text"><?= htmlentities($userNum) ?></p>
+                    </div>
+                </div>
+
+                <div class="card m-1" style="width: 16.5rem;" data-link="">
+                    <div class="card-body">
+                        <i class="fas fa-store-alt card-icon"></i>
+                        <h6 class="card-title text-muted">Rooms</h6>
+                        <p class="card-text"><?= htmlentities($roomNum) ?></p>
+                    </div>
+                </div>
+
+                <div class="card m-1" style="width: 16.5rem;" data-link="category/allcategories.php">
+                    <div class="card-body">
+                        <i class="fas fa-tags card-icon"></i>
+                        <h6 class="card-title text-muted">Categories</h6>
+                        <p class="card-text"><?= htmlentities($categoryNum) ?></p>
+                    </div>
+                </div>
+
+                <div class="card m-1" style="width: 16.5rem;" data-link="product/all_products.php">
+                    <div class="card-body">
+                        <i class="fas fa-coffee card-icon"></i>
+                        <h6 class="card-title text-muted">Products</h6>
+                        <p class="card-text"><?= htmlentities($productNum) ?></p>
+                    </div>
+                </div>
+
+                <div class="card m-1" style="width: 16.5rem;" data-link="order/all_orders.php">
+                    <div class="card-body">
+                        <i class="fas fa-shopping-cart card-icon"></i>
+                        <h6 class="card-title text-muted">Orders</h6>
+                        <p class="card-text"><?= htmlentities($orderNum) ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
