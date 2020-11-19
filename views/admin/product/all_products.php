@@ -19,6 +19,7 @@
       try{
       echo "<br>";
       echo "<h1 class=text-center>All Products</h1>";
+      echo "<a href='addproduct.php' class='btn btn-success my-3'>Add New Product</a>";
       echo "<br>";
         $stmt=$conn->prepare("SELECT * FROM `Product`");
         $stmt->execute();

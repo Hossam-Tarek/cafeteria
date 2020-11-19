@@ -1,0 +1,23 @@
+body {
+    background-color: var(--bg-color);
+}
+
+.form {
+    font-family: Poppins, sans-serif;
+}
+
+.form > label {
+    display: block;
+}
+
+.form__header {
+    color: var(--secondary-font-color);
+}
+
+input {
+    height: 45px;
+}
+
+.error-message {
+    color: #ff0000;
+}
