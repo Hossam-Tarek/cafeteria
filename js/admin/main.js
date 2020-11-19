@@ -39,3 +39,63 @@ $(document).ready(function(){
         window.location.href = $(this).attr("data-link");
     });
 })
+
+// Check Orders Ajax Functions
+
+//Ajax Function That Check Date And Return Date Within That Date
+$("input").on('change',function(){
+    console.log($(this).val());
+    var from=$('#from_date').val();
+    var to=$('#to_date').val();
+    $.ajax({
+        method:'GET',
+        url:'checkuserdate.php',
+        data:{
+            'from':from,
+            'to':to
+        },
+        success:function(responseText){
+             document.getElementById('select_user').innerHTML = responseText;
+        }
+    });
+     
+  });
+ 
+ //Ajax Function That  Display Users And Total Price For All order For Users
+ function Display(id){
+     var xml=new XMLHttpRequest();
+     xml.onreadystatechange=function(){
+         if(this.readyState == 4 && this.status == 200){
+             document.getElementById('orders_details').innerHTML = this.responseText;
+         }
+     }
+     xml.open('GET','orders.php?id='+id,true);
+     xml.send();
+ }
+ 
+ //Ajax Function That  Display  User Order Details For Order
+ function DisplayOrderDetails(id){
+     console.log('Enter'+id);
+     var xml=new XMLHttpRequest();
+     xml.onreadystatechange=function(){
+         if(this.readyState == 4 && this.status == 200){
+             document.getElementById('details').style.visibility ="visible";
+             document.getElementById('order_details').innerHTML = this.responseText;
+         }
+     }
+     xml.open('GET','orderdetails.php?id='+id,true);
+     xml.send();
+ }
+ //Ajax Function That  Display For Every Order 
+ function Displaydetails(id){
+   var xml=new XMLHttpRequest();
+   xml.onreadystatechange=function(){
+       if(this.readyState == 4 && this.status == 200){
+         document.getElementById('orders').style.visibility ="visible";
+           document.getElementById('orderdetails').innerHTML = this.responseText;
+       }
+   }
+   xml.open('GET','everyorderdetails.php?id='+id,true);
+   xml.send();
+ }
+  
