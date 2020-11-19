@@ -11,10 +11,19 @@ $(window).on('load', function () {
             "products": []
         }, roomNumber = $("#order-room-select").val();
 
-        if (roomNumber !== null) {
+        let adminSelectUser = true;
+        if ($('#send-order').attr('data-user-type') == 0 && $('.user-select').val() !== null) { // current user is admin
+            adminSelectUser = true;
+        } else {
+            adminSelectUser = false;
+            $('#user-select-validation').removeClass('display-none');
+        }
+        if ((roomNumber !== null && adminSelectUser && $('#send-order').attr('data-user-type') == 0) // admin
+            || (roomNumber !== null && $('#send-order').attr('data-user-type') != 0)) { // unormal user 
             $('#room-validation').addClass('display-none')
             const orderNotes = $('#order-notes').val();
             prePareOrder(orderObj, roomNumber, orderNotes); // prepare order content
+            console.log(orderObj);
             sendOrder(JSON.stringify(orderObj));
         } else {
             $('#room-validation').removeClass('display-none')
@@ -55,7 +64,6 @@ $(window).on('load', function () {
                     OrdreSuccessMessage.fadeOut(function () {
                         orderItemsContainer.addClass('py-3');
                         productAreaHint.removeClass('display-none');
-
                     });
                 }, 1500);
             }

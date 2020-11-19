@@ -1,13 +1,13 @@
 <?php
-class Room
+class User
 {
 
     // Database variables
     private $conn;
-    private $table = 'Room';
+    private $table = 'User';
 
-    // Room variables
-    private $room_id;
+    // User variables
+    private $id;
     private $name;
 
     // Constructor intialize Database connection variable
@@ -20,7 +20,7 @@ class Room
     public function readAll()
     {
         // Create Query
-        $sqlQuery = "SELECT `room_id` AS `id`, `name` FROM " . $this->table;
+        $sqlQuery = "SELECT `user_id` AS `id`, `name` FROM " . $this->table;
         // Prepare Query
         $stmt = $this->conn->prepare($sqlQuery);
         // Execute Query
@@ -32,26 +32,10 @@ class Room
         return $stmt;
     }
 
-    // Read one
-    public function readOne()
+    // User Vaibales Getters
+    function get_id()
     {
-    }
-
-    // Create room
-    public function create(&$errorMessage)
-    {
-    }
-
-    // Delete room
-    public function delete()
-    {
-    }
-
-
-    // Room Vaibales Getters
-    function get_room_id()
-    {
-        return $this->room_id;
+        return $this->id;
     }
 
     function get_name()
@@ -60,10 +44,10 @@ class Room
     }
 
     // Room Variables Setters
-    function set_room_id($room_id)
+    function set_id($id)
     {
-        if (is_numeric($room_id))
-            $this->room_id = htmlspecialchars(strip_tags($room_id));
+        if (is_numeric($id))
+            $this->id = htmlspecialchars(strip_tags($id));
     }
 
     function set_name($name)

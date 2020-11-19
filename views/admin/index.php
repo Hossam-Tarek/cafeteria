@@ -13,9 +13,10 @@ $PAGE_TITLE = "Cafeteria";
 $PAGE_STYLESHEETS = '<link rel="stylesheet" href="/cafeteria/css/admin/main.css">';
 $PAGE_SCRIPTS = '<script src="/cafeteria/js/admin/main.js"></script>';
 
-function getNumber($table) {
+function getNumber($table)
+{
     global $conn;
-    $sql = "SELECT COUNT(*) as count FROM ".$table;
+    $sql = "SELECT COUNT(*) as count FROM " . $table;
     $stm = $conn->prepare($sql);
     $stm->bindValue(":tableName", $table, PDO::PARAM_STR);
     $stm->execute();
@@ -39,8 +40,7 @@ $userNum = getNumber("User");
 
         <ul class="list-unstyled components">
             <li>
-                <a href="#user-menu" data-toggle="collapse" aria-expanded="false"
-                   class="dropdown-toggle">User</a>
+                <a href="#user-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">User</a>
 
                 <ul class="collapse list-unstyled" id="user-menu">
                     <li><a href="user/all_users.php">All users</a></li>
@@ -49,8 +49,7 @@ $userNum = getNumber("User");
             </li>
 
             <li>
-                <a href="#product-menu" data-toggle="collapse" aria-expanded="false"
-                   class="dropdown-toggle">Product</a>
+                <a href="#product-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Product</a>
 
                 <ul class="collapse list-unstyled" id="product-menu">
                     <li><a href="product/all_products.php">All products</a></li>
@@ -59,8 +58,7 @@ $userNum = getNumber("User");
             </li>
 
             <li>
-                <a href="#category-menu" data-toggle="collapse" aria-expanded="false"
-                   class="dropdown-toggle">Category</a>
+                <a href="#category-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Category</a>
 
                 <ul class="collapse list-unstyled" id="category-menu">
                     <li><a href="category/allcategories.php">All categories</a></li>
@@ -69,8 +67,7 @@ $userNum = getNumber("User");
             </li>
 
             <li>
-                <a href="#order-menu" data-toggle="collapse" aria-expanded="false"
-                   class="dropdown-toggle">Order</a>
+                <a href="#order-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Order</a>
 
                 <ul class="collapse list-unstyled" id="order-menu">
                     <li><a href="#">All orders</a></li>
@@ -87,7 +84,7 @@ $userNum = getNumber("User");
 
         <?php
         if (isset($_SESSION["success"])) {
-            echo "<p class='success'>". $_SESSION["success"] ."</p>";
+            echo "<p class='success'>" . $_SESSION["success"] . "</p>";
             unset($_SESSION["success"]);
         }
         ?>

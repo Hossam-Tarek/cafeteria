@@ -17,8 +17,9 @@
         public function close_connection(){
             $this->conn->close();
         }
-    }
 
-    // $c = new Database();
-    // var_dump($c -> connect());
-    
+        function __destruct()
+        {
+            // $this->conn->close();
+        }
+    }

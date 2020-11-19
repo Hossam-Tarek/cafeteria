@@ -19,9 +19,9 @@ require_once "../../../templates/header.php";
 
 <div class="container">
     <div class="row order">
-        <h2 class="col-12 border-bottom mb-5 pb-2">User Order</h2>
+        <h2 class="order-heading col-12 border-bottom mb-5 pb-2">User Order</h2>
+        
         <div class="col-12 col-md-4 menu-text d-flex align-items-center">menu</div>
-
         <div class="multi-select-dropdown col-12 col-md-4 d-flex flex-column pl-2 pr-2 pl-md-2 pr-md-0">
             <div class="select-area border d-flex align-items-center">
                 <span class="dropdown-hint"> Categories:</span>
@@ -74,7 +74,7 @@ require_once "../../../templates/header.php";
                     <div class="total-order-price-container d-flex px-3 align-items-center mb-3 flex-wrap display-none">
                         <span class="col-6">Total:</span>
                         <span class="col-6 font-weight-bolder total-price">0</span>
-                        <a href="javascript:;" id="send-order" class="btn btn-success col-12 mt-2" data-user-id='1'>Order now!</a>
+                        <a href="javascript:;" id="send-order" class="btn btn-success col-12 mt-2" >Order now!</a> <!-- will contain data-user-id='1' via JS -->
                     </div>
                 </div>
             </div>

@@ -20,6 +20,63 @@ $(window).on('load', function () {
         orderRoom = $('.order-room');
 
     /* Intialize page with data via APIs */
+
+    // Get Current User
+    function getUser() {
+        let user;
+        $.ajax({
+            type: "get",
+            url: "http://localhost/cafeteria/api/user/get_user.php",
+            dataType: "json",
+            success: function (data) {
+                user = data;
+
+                if (user.type == 0) { // the user is admin
+                    getAllUsers();
+                } else {
+                    // $('#send-order').data('user-id', user.id);
+                    $('#send-order').attr('data-user-id',user.id);
+                }
+                $('#send-order').attr('data-user-type',user.type);
+                // $('#send-order').data('user-type', user.type);
+                getAllProducts();
+            }
+        });
+    }
+
+    getUser();
+
+    // Get all users
+    function getAllUsers() {
+        $.ajax({
+            type: "get",
+            url: "http://localhost/cafeteria/api/user/read.php",
+            dataType: "json",
+            success: function (allUsers) {
+                let displayAllUsers = `
+                    <div class="all-user-select-container col-12 offset-md-4 col-md-8 p-1">
+                        <div class="all-user-select-content ml-1">
+                            <select class="custom-select user-select">
+                                <option selected disabled>Select the customer</option>`;
+                    // 
+                    allUsers.forEach(user => {
+                        displayAllUsers += `<option value="${user.id}">${user.name}</option>`;
+                    });
+                    displayAllUsers += `</select></div></div>`
+                    displayAllUsers = $(displayAllUsers);
+                    $('.order-heading').after(displayAllUsers);
+                        let errorMessage = $(`
+                        <div class="col-12 offset-md-4 col-md-8 p-1 display-none" id="user-select-validation">
+                            <div class="alert alert-danger ml-1" role="alert">
+                                Please select the customer
+                            </div>
+                        </div>`);
+                displayAllUsers.after(errorMessage);
+
+            }
+        });
+    }
+
     // Get all products
     function getAllProducts() {
         $.ajax({
@@ -32,8 +89,6 @@ $(window).on('load', function () {
             }
         });
     }
-
-    getAllProducts();
 
     // Get all categories
     function getAllCategories() {
@@ -118,6 +173,21 @@ $(window).on('load', function () {
         productCardCheckBox = $('.product-card input[type="checkbox"]');
     }
 
+    // change event for customer select
+    $(document).on('change', '.user-select', function () {
+        let selectedCustomer = $(this).val();
+        $('#send-order').attr('data-user-id',selectedCustomer);
+        $('#user-select-validation').addClass('display-none');
+    });
+
+    // $(document).on('change', '.#order-room-select', function () {
+        // $().addClass('display-none');
+    // });  
+    $('#order-room-select').click(function (){ 
+        $('#room-validation').addClass('display-none');
+    });
+
+    
     // preview image of product
     $(document).on('click', '.product-image-overlay a', function () {
         imagePreview.fadeIn();
@@ -292,10 +362,10 @@ $(window).on('load', function () {
 
     // handle minus quantity for product
     $(document).on('click', '.order-product-minus', function () {
-        let changeDone =  changeQuantity($(this), -1);
+        let changeDone = changeQuantity($(this), -1);
 
         const productPrice = $(this).parent().parent().data('product-price');
-        if(changeDone)
+        if (changeDone)
             calculateTotalPrice(-productPrice);
     });
 
@@ -326,7 +396,7 @@ $(window).on('load', function () {
         productQuantityController.prev().text(qunatity);
 
         // Update data-product-quantity
-        element.parent().parent().data('product-quantity',qunatity);
+        element.parent().parent().data('product-quantity', qunatity);
 
         let productPrice = parseFloat(productQuantityController.parent().data('product-price')),
             totalPricePerProduct = (qunatity * productPrice).toFixed(2);
