@@ -1,7 +1,14 @@
 <?php
+    session_start();
+    require_once "../../../database_connection.php";
+
+    if (!isset($_SESSION["account-type"]) || $_SESSION["account-type"] !== "admin") {
+        header("Location: /cafeteria/index.php");
+        return;
+    }
 
     require_once  "../../../templates/header.php";
-    require_once "../../../database_connection.php";
+    //require_once "../../../database_connection.php";
 
      $PAGE_TITLE="Add Product";
      $PAGE_STYLESHEETS = "<link rel='stylesheet' href='/cafeteria/css/admin/main.css'>";
@@ -131,6 +138,7 @@
         <?php } ?>
        
         <input type="submit" value="Add product" class="btn btn-group btn-success my-4">
+        <input onclick="history.back();" class="btn btn-info m-2 px-4" type="button" name="submit" id="cancel" value="Cancel">
     </form>
 </div>
 <?php  require_once  "../../../templates/footer.php"; ?>
