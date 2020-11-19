@@ -1,9 +1,15 @@
 <?php
+    session_start();
+    require_once "../../../database_connection.php";
+
+    if (!isset($_SESSION["account-type"]) || $_SESSION["account-type"] !== "admin") {
+        header("Location: /cafeteria/index.php");
+        return;
+    }
      $PAGE_TITLE="All Products";
      $PAGE_STYLESHEETS = "";
      $PAGE_SCRIPTS = "<script src='/cafeteria/js/admin/main.js'></script>";
      require_once  "../../../templates/header.php"; 
-     require_once "../../../database_connection.php";
 ?>
 <div class='container'>
 <div class='row'>
@@ -28,19 +34,16 @@
          echo "<table class='table  table-hover'>
          <thead class='text-light bg-dark'>
            <tr>
-             <th scope=col>Product_ID</th>
              <th scope=col>Name</th>
              <th scope=col>Price</th>
-             <th scope=col>Category_ID</th>
              <th scope=col>Product_Image</th>
              <th scope=col>Actions</th>
            </tr>
          </thead>";
           foreach($products as $product){
-            echo "<tr id='".$product['product_id']."'><th scope='row'>".ValidateData($product['product_id'])."</th>".              
+            echo "<tr id='".$product['product_id']."'>".              
             "<td> ".ValidateData($product['name'])."</td>".
             "<td> ".ValidateData($product['price'])."</td>".
-            "<td> ".ValidateData($product['category_id'])."</td>".
             "<td> "."<img width=100 height=100 style='border-radius:50%' src=".'../../../images/products/'.ValidateData($product['image']).">"."</td>".
             "<td>
                 <a data-product=".$product['product_id']." class='deleteproduct btn btn-danger mt-4'>Delete</a>
