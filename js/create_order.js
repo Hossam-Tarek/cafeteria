@@ -35,9 +35,9 @@ $(window).on('load', function () {
                     getAllUsers();
                 } else {
                     // $('#send-order').data('user-id', user.id);
-                    $('#send-order').attr('data-user-id',user.id);
+                    $('#send-order').attr('data-user-id', user.id);
                 }
-                $('#send-order').attr('data-user-type',user.type);
+                $('#send-order').attr('data-user-type', user.type);
                 // $('#send-order').data('user-type', user.type);
                 getAllProducts();
             }
@@ -58,14 +58,14 @@ $(window).on('load', function () {
                         <div class="all-user-select-content ml-1">
                             <select class="custom-select user-select">
                                 <option selected disabled>Select the customer</option>`;
-                    // 
-                    allUsers.forEach(user => {
-                        displayAllUsers += `<option value="${user.id}">${user.name}</option>`;
-                    });
-                    displayAllUsers += `</select></div></div>`
-                    displayAllUsers = $(displayAllUsers);
-                    $('.order-heading').after(displayAllUsers);
-                        let errorMessage = $(`
+                // 
+                allUsers.forEach(user => {
+                    displayAllUsers += `<option value="${user.id}">${user.name}</option>`;
+                });
+                displayAllUsers += `</select></div></div>`
+                displayAllUsers = $(displayAllUsers);
+                $('.order-heading').after(displayAllUsers);
+                let errorMessage = $(`
                         <div class="col-12 offset-md-4 col-md-8 p-1 display-none" id="user-select-validation">
                             <div class="alert alert-danger ml-1" role="alert">
                                 Please select the customer
@@ -176,18 +176,15 @@ $(window).on('load', function () {
     // change event for customer select
     $(document).on('change', '.user-select', function () {
         let selectedCustomer = $(this).val();
-        $('#send-order').attr('data-user-id',selectedCustomer);
+        $('#send-order').attr('data-user-id', selectedCustomer);
         $('#user-select-validation').addClass('display-none');
     });
 
-    // $(document).on('change', '.#order-room-select', function () {
-        // $().addClass('display-none');
-    // });  
-    $('#order-room-select').click(function (){ 
+    $('#order-room-select').click(function () {
         $('#room-validation').addClass('display-none');
     });
 
-    
+
     // preview image of product
     $(document).on('click', '.product-image-overlay a', function () {
         imagePreview.fadeIn();
@@ -265,7 +262,7 @@ $(window).on('load', function () {
     function displayCheckedCategoriesOnly(checkedCategories) {
         for (let index = 0; index < allCategoriesheader.length; index++) {
             const category = $(allCategoriesheader[index]);
-            if (checkedCategories.indexOf(category.data('category-id')) == -1) {
+            if (checkedCategories.indexOf(category.attr('data-category-id')) == -1) {
                 category.addClass('display-none').next().addClass('display-none');
             } else {
                 category.removeClass('display-none').next().removeClass('display-none');
@@ -299,7 +296,7 @@ $(window).on('load', function () {
     /* Working with order section */
     // Add checked product to order
     $(document).on('change', '.product-card input[type="checkbox"]', function () {
-        const productId = $(this).data('product-id'),
+        const productId = $(this).attr('data-product-id'),
             productNameElement = $(this).siblings('h5'),
             productPrice = parseFloat(productNameElement.next().text());
 
@@ -307,8 +304,8 @@ $(window).on('load', function () {
             addProductToOrder(productNameElement.text(), productPrice, productId);
             calculateTotalPrice(productPrice);
         } else {
-            removeProductFromOrder(productId);
-            calculateTotalPrice(-productPrice);
+            let TotalPricePerProduct = removeProductFromOrder(productId);
+            calculateTotalPrice(-TotalPricePerProduct);
         }
     });
 
@@ -338,15 +335,16 @@ $(window).on('load', function () {
     // Remove product from order menu
     function removeProductFromOrder(productId) {
         const productsInOrder = $('.one-product');
-
+        let TotalPricePerProduct = 0;
         for (let index = 0; index < productsInOrder.length; index++) {
             const element = $(productsInOrder[index]);
-            if (element.data('product-id') == productId) {
+            if (element.attr('data-product-id') == productId) {
+                TotalPricePerProduct = parseFloat(element.attr('data-product-quantity')) * parseFloat(element.attr('data-product-price'));
                 element.fadeOut(0, function () {
                     $(this).remove();
                     checkItemsPerOrderForDisplayHint();
                 })
-                break;
+                return TotalPricePerProduct;
             }
         }
     }
@@ -355,7 +353,7 @@ $(window).on('load', function () {
     $(document).on('click', '.order-product-plus', function () {
         changeQuantity($(this));
 
-        const productPrice = parseFloat($(this).parent().parent().data('product-price'));
+        const productPrice = parseFloat($(this).parent().parent().attr('data-product-price'));
 
         calculateTotalPrice(productPrice);
     });
@@ -364,14 +362,14 @@ $(window).on('load', function () {
     $(document).on('click', '.order-product-minus', function () {
         let changeDone = changeQuantity($(this), -1);
 
-        const productPrice = $(this).parent().parent().data('product-price');
+        const productPrice = $(this).parent().parent().attr('data-product-price');
         if (changeDone)
             calculateTotalPrice(-productPrice);
     });
 
     // handle remove for product
     $(document).on('click', '.order-product-remove', function () {
-        $(`.product-card input[data-product-id="${$(this).parent().data('product-id')}"]`).prop('checked', false); // Remove check from product of category
+        $(`.product-card input[data-product-id="${$(this).parent().attr('data-product-id')}"]`).prop('checked', false); // Remove check from product of category
 
         const productTotalAmountPrice = parseFloat($(this).prev().text());
 
@@ -396,9 +394,9 @@ $(window).on('load', function () {
         productQuantityController.prev().text(qunatity);
 
         // Update data-product-quantity
-        element.parent().parent().data('product-quantity', qunatity);
+        element.parent().parent().attr('data-product-quantity', qunatity);
 
-        let productPrice = parseFloat(productQuantityController.parent().data('product-price')),
+        let productPrice = parseFloat(productQuantityController.parent().attr('data-product-price')),
             totalPricePerProduct = (qunatity * productPrice).toFixed(2);
 
         parseFloat(productQuantityController.next().text(totalPricePerProduct))

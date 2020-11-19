@@ -22,8 +22,8 @@ require_once "../../../templates/header.php";
         <h2 class="order-heading col-12 border-bottom mb-5 pb-2">User Order</h2>
         
         <div class="col-12 col-md-4 menu-text d-flex align-items-center">menu</div>
-        <div class="multi-select-dropdown col-12 col-md-4 d-flex flex-column pl-2 pr-2 pl-md-2 pr-md-0">
-            <div class="select-area border d-flex align-items-center">
+        <div class="multi-select-dropdown col-12 col-md-4 d-flex flex-column pl-2 pr-2 pl-md-2 pr-md-0 mb-0">
+            <div class="select-area border d-flex align-items-center mb-3">
                 <span class="dropdown-hint"> Categories:</span>
                 <span class="selected-values"> All</span>
                 <i class="fas fa-angle-down"></i>

@@ -5,7 +5,7 @@ $(window).on('load', function () {
 
     $('#send-order').click(function () {
         let orderObj = {
-            "user": $(this).data('user-id'),
+            "user": $(this).attr('data-user-id'),
             "room": "",
             "comment": "",
             "products": []
@@ -38,8 +38,8 @@ $(window).on('load', function () {
         $.each(allProducts, function (indexInArray, product) {
             product = $(product);
             orderObj.products.push({
-                "id": product.data('product-id'),
-                "quantity": product.data('product-quantity')
+                "id": product.attr('data-product-id'),
+                "quantity": product.attr('data-product-quantity')
             });
         });
     }
@@ -89,6 +89,7 @@ $(window).on('load', function () {
             $('#order-notes').val('')
             checkItemsPerOrderForDisplayHint();
             $('#order-room-select option:first-child').prop('selected', true);
+            $('.user-select option:first-child').prop('selected', true);
             $('.product-card input[type="checkbox"]').prop('checked', false);
         }
 
