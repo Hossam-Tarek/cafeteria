@@ -1,5 +1,13 @@
 <?php
- $PAGE_TITLE="All Users";
+session_start();
+require_once "../../../database_connection.php";
+
+if (!isset($_SESSION["account-type"]) || $_SESSION["account-type"] !== "admin") {
+    header("Location: /cafeteria/index.php");
+    return;
+}
+
+$PAGE_TITLE="All Users";
  $PAGE_STYLESHEETS = "";
  $PAGE_SCRIPTS = "<script src='/cafeteria/js/admin/main.js'></script>";
  require_once  "../../../templates/header.php"; 
@@ -45,7 +53,7 @@
           "<td> "."<img width=100 height=100 style='border-radius:50%' src=".'../../../images/avatars/'.ValidateData($user['avatar']).">"."</td>".
           "<td>
               <a data-user=".$user['user_id']." class='deleteuser btn btn-danger mt-4'>Delete</a>
-              <a href='add-user.php?id=".$user['user_id']."' class='btn btn-primary mt-4'>Edit</a></td></tr>";
+              <a href='edituser.php?id=".$user['user_id']."' class='btn btn-primary mt-4'>Edit</a></td></tr>";      
           }
      echo "</table>";
       }    
