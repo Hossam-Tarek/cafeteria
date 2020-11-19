@@ -18,7 +18,7 @@
         // Read all
         public function readAll(){
             // Create Query
-            $sqlQuery = "SELECT `category_id` AS `id`, `name` FROM " . $this -> table;
+            $sqlQuery = "SELECT `category_id` AS `id`, `name` FROM " . $this -> table . " ORDER BY `category_id`";
             // Prepare Query
             $stmt = $this -> conn -> prepare($sqlQuery);
             // Execute Query

@@ -29,7 +29,6 @@
             try {
                 $stmt -> execute();
             } catch (Exception $e) {
-                // var_dump($stmt -> errorInfo());
                 return false;
             }
             return $stmt;

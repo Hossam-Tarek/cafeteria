@@ -19,7 +19,7 @@
     $errorMessage;
     // Get data of (Order) from POST request
     $data = json_decode(file_get_contents("php://input"));
-    if(!empty($data->user) && !empty($data->room) && !empty($data->comment) && !empty($data->products) && is_array($data->products)){
+    if(!empty($data->user) && !empty($data->room) && isset($data->comment) && !empty($data->products) && is_array($data->products)){
         $oredrObj -> set_user_id($data -> user);
         $oredrObj -> set_room_id($data -> room);
         $oredrObj -> set_comment($data -> comment);
