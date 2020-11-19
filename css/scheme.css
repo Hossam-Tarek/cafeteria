@@ -5,13 +5,22 @@
     --secondary-font-color: #666666;
     --primary-font-family: Poppins, sans-serif;
 }
-
-footer{
+.myfooter{
+    background-color: #1c2024;
+    color: rgb(230, 220, 220);
+    font-weight: 400;
+    font-size: 0.7em;
+    letter-spacing: .1em;
     position: absolute;
     bottom: 0px;
-    background-color: #1c2024;
-    color: white;
-    font-weight: 400;
-    font-size: 0.9em;
-    letter-spacing: .1em;
+}
+.mycontainer{
+    position: relative;
+    min-height: 100%;
+}
+.content{
+    padding-bottom: 150px;
+}
+body{
+    height: 100%;
 }

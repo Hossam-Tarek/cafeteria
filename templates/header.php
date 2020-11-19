@@ -34,6 +34,7 @@ $name = "user";
     %STYLE_SHEETS%
 </head>
 <body>
+    <div class="mycontainer">
     <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
         <a class="navbar-brand font-weight-bolder" href="#">Cafeteria</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,4 +74,7 @@ $name = "user";
             </ul>
         </div>
     </nav>
+    <div class="content">
+
+
     
