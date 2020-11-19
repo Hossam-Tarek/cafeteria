@@ -5,16 +5,20 @@
 #products{
     border: 1px solid black;
     display: none;
+    margin: auto;
+    overflow:visible;
 }
 .product-image{
-    width:70px;
      height:70px
 }
-.product .product-price {
+/* .product .product-price {
    width: 60px;
    height: 43px;
    border-radius: 42px;
    border: 2px groove black;
    padding: 5px;
    text-align: center;
+} */
+#error{
+    display: none;
 }

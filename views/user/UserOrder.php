@@ -22,6 +22,13 @@
         public $stmt;
         public $numrows;
         public $row;
+
+        // public function getSumOrders(){
+
+        // }
+
+
+
         //fetch all orders for user
         public function getOrderData()
         {
@@ -39,14 +46,18 @@
 
             $stmt2 = ($conn)->prepare($ordePriceQuery);
             $stmt2->execute();
-            $rowsno = $stmt2->rowCount();
             $row2 = ($stmt2)->fetchAll(PDO::FETCH_ASSOC);
-            $orderPrices =[];
 
-            foreach (($row2) as $record => $column){
-                $orderPrices[]=($column["price"]);  //save data in array
+            $orders =[];   //json object
+            $sum;
+            //get total sum of orders
+            foreach($row2 as $key=>$value){   
+                $sum[] = $value["price"];
             }
-            $i=0;   //for loop in orderPrices
+            $sum = array_sum($sum);
+         
+            $orders["prices"] = $row2;
+            $orders["sum"] = $sum;
 
             //fetch all orders between 2 dates
             $this->query = "SELECT * FROM `Order` WHERE user_id = $id
@@ -56,30 +67,9 @@
             ($this->stmt)->execute();
             $this->numrows = ($this->stmt)->rowCount();
 
-            if (($this->numrows) > 0) {
-                $this->row = ($this->stmt)->fetchAll(PDO::FETCH_ASSOC);
-                foreach (($this->row) as $record => $column):
-                    $status;
-                    if ($column['status'] == 0) {$status = "processing";} 
-                    elseif ($column['status'] == 1) {$status = "done";} 
-                    elseif ($column['status'] == 2) {$status = "out of delievry";}
-            $id = ($column['order_id']);
-?>
-
-                    <tr role='button' id="<?php echo "id".$id; ?>"  onclick="getProducts(<?php echo $id; ?>)">  <!-- click  on order do function with order id as parameter -->
-                        <td> <?php echo date('Y-m-d', strtotime($column['date'])); ?></td>
-                        <td><?php echo ($status); ?></td>
-                        <td><?php echo ($orderPrices[0+$i]." LE"); ?></td>
-                        <td><?php if ($column['status'] == 0): ?>
-                            <a class="btn btn-danger" onclick="deleteOrder(<?php echo $id; ?>)">cancel</a>
-                <?php endif;?>
-                        </td>
-                    </tr>
-
-                <?php
-                    $i++;
-                    endforeach;
-                }
+            $this->row = ($this->stmt)->fetchAll(PDO::FETCH_ASSOC);
+            $orders["orders"] = $this->row;
+            return (json_encode($orders));   //return json object
         }
     // get products related to order id
         public function getProducts()
@@ -90,23 +80,8 @@
                             AND Order_Product.order_id=" . $_GET["id"] . "";   //id from get method
             $this->stmt = $conn->prepare($this->query);
             ($this->stmt)->execute();
-            $this->numrows = ($this->stmt)->rowCount();
-            if (($this->numrows) > 0) {
-                $this->row = ($this->stmt)->fetchAll(PDO::FETCH_ASSOC);?>
-                <?php
-                    foreach (($this->row) as $record => $column):
-                ?>
-
-                    <div class="d-inline-block product" >
-                        <img class="product-image d-block rounded ml-3" src="../../images/products/<?php echo ($column["image"]); ?>"/>
-                        <span class="d-block"><?php echo ($column["name"]); ?></span>
-                        <span class="d-block"><?php echo ($column["quantity"]); ?></span>
-                        <span class=""><?php echo $column["price"]*$column["quantity"] ?> Le</span>
-                    </div>
-
-                <?php
-                    endforeach; 
-            }
+            $this->row = ($this->stmt)->fetchAll(PDO::FETCH_ASSOC);
+            return (json_encode($this->row));
         }
 
         //delete order
@@ -114,19 +89,32 @@
         {
             global $conn;
             $this->query = "delete from `Order` WHERE
-                            order_id=" . $_GET["deleteorder"] . ""; //id from get method
+                            order_id=" . $_GET["deleteOrderId"] . ""; //id from get method
             $this->stmt = $conn->prepare($this->query);
             ($this->stmt)->execute();
-        }
 
+            $query = "SELECT SUM(price*quantity) as price
+                      FROM `Product` INNER JOIN `Order_Product`
+                      ON Order_Product.product_id=Product.product_id
+                      INNER JOIN `Order`
+                      ON Order_Product.order_id=`Order`.order_id 
+                      WHERE Order_Product.order_id =".$_GET["deleteOrderId"];
+            $statement->$conn->prepare($query);
+            $statement->execute();
+            $row = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return (json_encode($row));
+        }
     }
     $obj = new UserOrder();
-    $obj->getOrderData();
-    if (isset($_GET["id"])) {
-        $obj->getProducts();
+    
+    if (isset($_GET["dateFrom"])){
+       echo($obj->getOrderData());  
     }
-    if (isset($_GET["deleteorder"])) {
-        $obj->deleteOrder();
+    if (isset($_GET["id"])) {
+        echo($obj->getProducts());
+    }
+    if (isset($_GET["deleteOrderId"])) {
+        echo($obj->deleteOrder());
     }
 ?>
 
