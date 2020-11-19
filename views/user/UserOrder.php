@@ -93,16 +93,17 @@
             $this->stmt = $conn->prepare($this->query);
             ($this->stmt)->execute();
 
-            $query = "SELECT SUM(price*quantity) as price
-                      FROM `Product` INNER JOIN `Order_Product`
-                      ON Order_Product.product_id=Product.product_id
-                      INNER JOIN `Order`
-                      ON Order_Product.order_id=`Order`.order_id 
-                      WHERE Order_Product.order_id =".$_GET["deleteOrderId"];
-            $statement->$conn->prepare($query);
-            $statement->execute();
-            $row = $statement->fetchAll(PDO::FETCH_ASSOC);
-            return (json_encode($row));
+            // $query1 = "SELECT SUM(price*quantity) as price
+            //           FROM `Product` INNER JOIN `Order_Product`
+            //           ON Order_Product.product_id=Product.product_id
+            //           INNER JOIN `Order`
+            //           ON Order_Product.order_id=`Order`.order_id 
+            //           WHERE Order_Product.order_id =".$_GET["deleteOrderId"]."";
+            // $statement1->$conn->prepare($query);
+            // $statement1->execute();
+            // $row1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
+            // return (json_encode($row));
+            // return($row1);
         }
     }
     $obj = new UserOrder();
@@ -114,7 +115,7 @@
         echo($obj->getProducts());
     }
     if (isset($_GET["deleteOrderId"])) {
-        echo($obj->deleteOrder());
+        ($obj->deleteOrder());
     }
 ?>
 

@@ -77,6 +77,8 @@ function showOrder() {
                 order_row.appendChild(order_status);
 
                 let order_amount = document.createElement("td");
+                order_amount.setAttribute("data-price" , response.prices[i].price);
+                order_amount.setAttribute("data-id" , response.orders[i].order_id);
                 order_amount.textContent = (response.prices[i].price)+" LE";
                 order_row.appendChild(order_amount);
 
@@ -145,17 +147,20 @@ function showProduct(e){
 
 function deleteOrder(event){
     event.stopPropagation();
-    let parentElement = event.target.parentElement.parentElement;
-    let id = parentElement.getAttribute("data-id");
+    let totalPriceElement = document.getElementById("total-sum"); //get total price element
+    let parentElement = event.target.parentElement.parentElement; //tr parent of clicked button
+    let id = parentElement.getAttribute("data-id");               //td with data-id att
+    let priceElement = document.querySelector("td[data-id='"+id+"']");
+    let minus_price = priceElement.getAttribute("data-price");    //price of this order
     var xhttp;
     xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            let response = JSON.parse(xhttp.responseText);
-            console.log(response);
+            totalPriceElement.textContent = (totalPriceElement.innerText) - minus_price; //calculate total price
             document.getElementById("products").innerHTML = "";
             document.getElementById("products").visibility = "hidden";
             parentElement.remove();
+
         }
 };
     xhttp.open("GET", "UserOrder.php?deleteOrderId=" + id);
