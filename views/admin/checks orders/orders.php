@@ -3,7 +3,7 @@
     $id=$_GET['id'];
     $orders="";
     if($id==0){
-            $stmt=$con->prepare("SELECT u.name,u.user_id ,sum(price*quantity) as totalprice
+            $stmt=$conn->prepare("SELECT u.name,u.user_id ,sum(price*quantity) as totalprice
                                 from `User` u ,`order_product` op,`product` p,`order` o
                                 where o.user_id=u.user_id
                                 and op.order_id=o.order_id
@@ -20,7 +20,7 @@
             <?php } 
     }
     else{ 
-        $stmt=$con->prepare("  select u.name ,sum(price*quantity) as totalprice
+        $stmt=$conn->prepare("  select u.name ,sum(price*quantity) as totalprice
         from `User` u ,`Order_product` op,`Product` p,`Order` o
         where o.user_id=u.user_id
         and op.order_id=o.order_id

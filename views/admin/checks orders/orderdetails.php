@@ -2,7 +2,7 @@
 <?php
 $id=$_GET['id'];
 
-$stmt=$con->prepare("SELECT `Order`.order_id,`Order`.`user_id` ,date,price*quantity as amount  
+$stmt=$conn->prepare("SELECT `Order`.order_id,`Order`.`user_id` ,date,price*quantity as amount  
                      from `User` ,`Order`,Product,Order_product,`Room`
                         where `Order`.order_id=order_product.order_id
                         and Product.product_id=order_product.product_id

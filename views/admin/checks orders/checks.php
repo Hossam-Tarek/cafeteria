@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once "../../../database_connection.php";
-
 if (!isset($_SESSION["account-type"]) || $_SESSION["account-type"] !== "admin") {
     header("Location: /cafeteria/index.php");
     return;
@@ -89,8 +88,3 @@ if (!isset($_SESSION["account-type"]) || $_SESSION["account-type"] !== "admin") 
 <?php
       require_once  "../../../templates/footer.php";
 ?>
-
-
-
-
-
