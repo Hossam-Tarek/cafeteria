@@ -69,12 +69,13 @@ $name = "user";
                    </a>
                 </li>
                 <li class="nav-item mt-2 nav-link"><?php echo $name;  ?></li>
-                <li class="nav-item mt-2 nav-link"><a class="nav-link mt-n2" href="../../logout.php">Log Out<a></li>
+                <li class="nav-item mt-2 nav-link"><a class="nav-link mt-n2" href="../../logout.php">Log Out</a></li>
 
             </ul>
         </div>
     </nav>
     <div class="content">
+        
 
 
     

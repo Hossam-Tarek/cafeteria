@@ -40,7 +40,7 @@ function showOrder() {
 
     validateDate(valOfDateFrom, valOfDateTo);
 
-    document.getElementById("products").style.display = "none";              
+    // document.getElementById("products").style.display = "none";              
     var xhttp;
     var response;
     xhttp = new XMLHttpRequest();                        //ajax 
@@ -158,21 +158,19 @@ function deleteOrder(event){
         if (this.readyState == 4 && this.status == 200) {
             totalPriceElement.textContent = (totalPriceElement.innerText) - minus_price; //calculate total price
             document.getElementById("products").innerHTML = "";
-            document.getElementById("products").visibility = "hidden";
+            document.getElementById("products").style.display = "none";
             parentElement.remove();
 
         }
 };
     xhttp.open("GET", "UserOrder.php?deleteOrderId=" + id);
     xhttp.send();
-    
 }
 //click on order
 let user_order = document.querySelectorAll(".user-order");
 for(let i = 0 ; i< user_order.length ; i++){  //add event on cancel
     user_order[i].addEventListener("click" , showProduct);   
 }
-
 //click  cancel 
 let order_product = document.querySelectorAll(".cancel-button");
 for(let i = 0 ; i< order_product.length ; i++){  //add event on cancel
