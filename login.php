@@ -28,7 +28,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
         return;
     }
 
-    $sql = "SELECT name, email, password FROM User WHERE email = :email";
+    $sql = "SELECT user_id, name, email, password FROM User WHERE email = :email";
     $statement = $conn->prepare($sql);
     $statement->bindValue(":email", $_POST["email"], PDO::PARAM_STR);
 
@@ -48,6 +48,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
     }
 
     if (md5($_POST["password"]) === $row["password"]) {
+        $_SESSION["id"] = $row["user_id"];
         $_SESSION["name"] = $row["name"];
         $_SESSION["email"] = $_POST["email"];
         $_SESSION["account-type"] = "user";
