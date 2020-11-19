@@ -81,7 +81,7 @@
         <tr role='button' class="user-order" data-id="<?php echo $id; ?>">  <!-- click  on order do function with order id as parameter -->
             <td><?php echo date('Y-m-d', strtotime($column['date'])); ?></td>
             <td><?php echo ($status); ?></td>
-            <td><?php echo ($orderPrices[0 + $i]); ?> LE</td>
+            <td data-id="<?php echo $id ?>" data-price="<?php echo ($orderPrices[0 + $i]); ?>"><?php echo ($orderPrices[0 + $i]); ?> LE</td>
             <td><?php if ($column['status'] == 0): ?>
                      <a class="btn btn-danger cancel-button" data-id="<?php echo $id; ?>">cancel</a>
                 <?php endif;?>
@@ -96,7 +96,7 @@
 
         </tbody>
     </table>
-    <div id="products" class="p-3 justify-content-center">
+    <div id="products" class="p-3 align-items-center justify-content-center">
     </div>
     <div class="font-weight-bolder float-right">
          <span >Total:</span>

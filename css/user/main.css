@@ -8,17 +8,14 @@
     margin: auto;
     overflow:visible;
 }
-.product-image{
-     height:70px
+.product{
+    text-align: center;
 }
-/* .product .product-price {
-   width: 60px;
-   height: 43px;
-   border-radius: 42px;
-   border: 2px groove black;
-   padding: 5px;
-   text-align: center;
-} */
+.product-image{
+     height:70px;
+     width: auto;
+     align-self: center;
+}
 #error{
     display: none;
 }

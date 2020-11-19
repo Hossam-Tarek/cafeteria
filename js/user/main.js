@@ -117,7 +117,7 @@ function showProduct(e){
                 product.classList.add("card","d-inline-block","product","mr-2","col-md-2");
 
                 let product_image = document.createElement("img");
-                product_image.classList.add("card-img-top","product-image","d-block","rounded","ml-3");
+                product_image.classList.add("product-image","d-block","rounded","ml-4");
                 product_image.setAttribute("src" , "../../images/products/"+response[i].image+"");
                 product.appendChild(product_image);
 
@@ -167,51 +167,14 @@ function deleteOrder(event){
     xhttp.send();
     
 }
-
-//get product for order
+//click on order
 let user_order = document.querySelectorAll(".user-order");
-
 for(let i = 0 ; i< user_order.length ; i++){  //add event on cancel
-    user_order[i].addEventListener("click" , function () {
-        let id = this.getAttribute('data-id');
-        var xhttp;
-        var tr = document.querySelectorAll(".user-order"); //reset background color of all tr
-        for(let i=0 ; i< tr.length ;i++){
-            tr[i].style.background="";
-        }
-        this.style.background="#c58989"; 
-        xhttp = new XMLHttpRequest();                     //start ajax
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("products").style.display = "block";
-                document.getElementById("products").innerHTML = this.responseText;
-            }
-        };
-        xhttp.open("GET", "UserOrder.php?id=" + id);
-        xhttp.send();
-    });   
+    user_order[i].addEventListener("click" , showProduct);   
 }
 
-//delete order 
+//click  cancel 
 let order_product = document.querySelectorAll(".cancel-button");
-
 for(let i = 0 ; i< order_product.length ; i++){  //add event on cancel
-    order_product[i].addEventListener("click" , function (event) {   
-        event.stopPropagation();     //stop bubbling
-        let id = this.getAttribute('data-id');
-        // this.parentElement.parentElement.remove();
-        var xhttp;
-        xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("products").innerHTML = "";
-                let ele = document.querySelectorAll(".cancel-button")[i];
-                ele.parentElement.parentElement.remove();
-                document.getElementById("products").style.visibility = "hidden";
-            }
-    };
-        xhttp.open("GET", "UserOrder.php?deleteorder=" + id);
-        xhttp.send();
-  
-    });   
+    order_product[i].addEventListener("click" , deleteOrder);   
 }
