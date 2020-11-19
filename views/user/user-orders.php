@@ -20,6 +20,8 @@
             $row = $statement->fetch(PDO::FETCH_ASSOC);
             $id = $row["user_id"];
         }
+    }else{
+        header("Location: /cafeteria/login.php");
     }
 ?>
 <div class="container">

@@ -13,8 +13,6 @@
 }
 .product-image{
      height:70px;
-     width: auto;
-     align-self: center;
 }
 #error{
     display: none;

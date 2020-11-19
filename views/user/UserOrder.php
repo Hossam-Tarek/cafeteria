@@ -22,13 +22,6 @@
         public $stmt;
         public $numrows;
         public $row;
-
-        // public function getSumOrders(){
-
-        // }
-
-
-
         //fetch all orders for user
         public function getOrderData()
         {
@@ -92,18 +85,6 @@
                             order_id=" . $_GET["deleteOrderId"] . ""; //id from get method
             $this->stmt = $conn->prepare($this->query);
             ($this->stmt)->execute();
-
-            // $query1 = "SELECT SUM(price*quantity) as price
-            //           FROM `Product` INNER JOIN `Order_Product`
-            //           ON Order_Product.product_id=Product.product_id
-            //           INNER JOIN `Order`
-            //           ON Order_Product.order_id=`Order`.order_id 
-            //           WHERE Order_Product.order_id =".$_GET["deleteOrderId"]."";
-            // $statement1->$conn->prepare($query);
-            // $statement1->execute();
-            // $row1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
-            // return (json_encode($row));
-            // return($row1);
         }
     }
     $obj = new UserOrder();
