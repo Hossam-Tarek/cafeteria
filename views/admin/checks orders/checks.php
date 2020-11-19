@@ -12,7 +12,6 @@ if (!isset($_SESSION["account-type"]) || $_SESSION["account-type"] !== "admin") 
  require_once  "../../../templates/header.php"; 
 ?>
 <?php 
-  $conn=new PDO($servername,$username,$password);
   $stmt=$conn->prepare("
                       select u.name ,u.user_id from `User` u ,`order_product` op,`product` p,`order` o ,`room` r
                       where o.user_id=u.user_id
