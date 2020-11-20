@@ -27,3 +27,12 @@
     top: 90%;
     transform: translateX(-90%);
 }
+
+@media (max-width: 768px) {
+    .right-nav-list {
+        position: static;
+    }
+    .login-dropdown {
+        position: static;
+    }
+}
