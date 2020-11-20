@@ -5,21 +5,5 @@
     --secondary-font-color: #666666;
     --primary-font-family: Poppins, sans-serif;
 }
-.content{
-    padding-bottom: 300px;
-}
-.myfooter{
-    background-color: #1c2024;
-    color: rgb(230, 220, 220);
-    font-weight: 400;
-    font-size: 0.7em;
-    letter-spacing: .1em;
-    position: absolute;
-    bottom: 0px;
-}
-.mycontainer{
-    position: relative;
-    min-height: 100vh;
-}
 
 

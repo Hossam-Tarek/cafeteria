@@ -1,0 +1,35 @@
+
+#header-container{
+    position: relative;
+    min-height: 100vh;
+}
+#footer{
+    background-color: #1c2024;
+    color: rgb(230, 220, 220);
+    font-weight: 400;
+    font-size: 0.7em;
+    letter-spacing: .1em;
+    position: absolute;
+    bottom: 0px;
+}
+.right-nav-list{
+    position: absolute;
+    right: 20px;
+}
+#navbar-list-4{
+    position: relative;
+}
+.login-dropdown {
+    position: absolute;
+    top: 90%;
+    transform: translateX(-90%);
+}
+@media (max-width: 768px) {
+    .right-nav-list {
+        position: static;
+    }
+    #dropdown{
+        display: none;
+    }
+}
+

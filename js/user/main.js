@@ -35,14 +35,14 @@ dateTo.addEventListener("change", showOrder);
 //on change function to fetch orders
 function showOrder() {   
 
-    var valOfDateTo = dateTo.value;
-    var valOfDateFrom = document.getElementById("date-from").value;
+    let valOfDateTo = dateTo.value;
+    let valOfDateFrom = document.getElementById("date-from").value;
 
     validateDate(valOfDateFrom, valOfDateTo);
 
     // document.getElementById("products").style.display = "none";              
-    var xhttp;
-    var response;
+    let xhttp;
+    let response;
     xhttp = new XMLHttpRequest();                        //ajax 
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -104,7 +104,7 @@ function showOrder() {
 function showProduct(e){
     let parentElement = e.target.parentElement;
     let id = parentElement.getAttribute('data-id');
-    var xhttp;
+    let xhttp;
     xhttp = new XMLHttpRequest();                     //start ajax
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -152,7 +152,7 @@ function deleteOrder(event){
     let id = parentElement.getAttribute("data-id");               //td with data-id att
     let priceElement = document.querySelector("td[data-id='"+id+"']");
     let minus_price = priceElement.getAttribute("data-price");    //price of this order
-    var xhttp;
+    let xhttp;
     xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
