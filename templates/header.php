@@ -31,17 +31,18 @@ $name = "user";
     <link rel="stylesheet" href="/cafeteria/css/bootstrap.css">
     <link rel="stylesheet" href="/cafeteria/css/fontaswesme-all.min.css">
     <link rel="stylesheet" href="/cafeteria/css/scheme.css">
+    <link rel="stylesheet" href="/cafeteria/css/template.css">
     %STYLE_SHEETS%
 </head>
 <body>
-    <div class="mycontainer">
+    <div id="header-container">
     <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
         <a class="navbar-brand font-weight-bolder" href="#">Cafeteria</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbar-list-4">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a></li>
                 <?php if ($name == "Admin"): ?>
                 <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
@@ -62,19 +63,34 @@ $name = "user";
                     $row = $statement->fetch(PDO::FETCH_ASSOC);
                 }
             ?>    
-            <ul class="navbar-nav">
+            <ul class="nav navbar-nav right-nav-list">
                 <li class="nav-item">
                     <a class="nav-link" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                         <img src="/cafeteria/images/avatars/<?php echo (isset($row['avatar']) ? $row['avatar'] : 'avatar2.png'); ?>" width="40" height="40" class="rounded-circle">
                    </a>
                 </li>
-                <li class="nav-item mt-2 nav-link"><?php echo $name;  ?></li>
-                <li class="nav-item mt-2 nav-link"><a class="nav-link mt-n2" href="../../logout.php">Log Out</a></li>
+                <li class="nav-item d-lg-none">
+                    <a class="nav-link" href="../../logout.php">Log out</a>
+                </li>
 
+                <li class="nav-item dropdown mt-2">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="caret"></span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <span class="dropdown-item">
+                            <img src="/cafeteria/images/avatars/<?php echo (isset($row['avatar']) ? $row['avatar'] : 'avatar2.png'); ?>" width="40" height="40" class="rounded-circle">
+                        </span>
+                        <span class="dropdown-item"><?php  echo $name;?></span>
+                    <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="../../logout.php">Log out</a>
+                    </div>
+                </li>
             </ul>
         </div>
     </nav>
     <div class="content">
+        
         
 
 

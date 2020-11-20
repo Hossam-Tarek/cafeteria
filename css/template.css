@@ -1,0 +1,25 @@
+#header-container{
+    position: relative;
+    min-height: 100vh;
+}
+.content{
+    padding-bottom: 300px;
+}
+#footer{
+    background-color: #1c2024;
+    color: rgb(230, 220, 220);
+    font-weight: 400;
+    font-size: 0.7em;
+    letter-spacing: .1em;
+    position: absolute;
+    bottom: 0px;
+}
+.right-nav-list{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+#navbar-list-4{
+    position: relative;
+}
+
