@@ -77,7 +77,7 @@ $name = "user";
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="caret"></span>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu login-dropdown" aria-labelledby="navbarDropdown">
                         <span class="dropdown-item">
                             <img src="/cafeteria/images/avatars/<?php echo (isset($row['avatar']) ? $row['avatar'] : 'avatar2.png'); ?>" width="40" height="40" class="rounded-circle">
                         </span>
