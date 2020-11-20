@@ -2,13 +2,13 @@
 <?php
 $id=$_GET['id'];
 
-$stmt=$conn->prepare("SELECT `Order`.order_id,`Order`.`user_id` ,date,price*quantity as amount  
-                     from `User` ,`Order`,Product,Order_product,`Room`
-                        where `Order`.order_id=order_product.order_id
-                        and Product.product_id=order_product.product_id
-                        and `User`.`user_id`=`order`.`user_id`
-                        and `Order`.`user_id`=?
-                        GROUP by `Order`.order_id
+$stmt=$conn->prepare("SELECT o.order_id, date, sum(price*quantity) as amount  
+                        from `User`,`Order` o,Product,Order_Product
+                        where o.order_id=Order_Product.order_id
+                        and Product.product_id=Order_Product.product_id
+                        and `User`.`user_id`=o.`user_id`
+                        and o.`user_id`= ?
+                        GROUP BY o.order_id;
                     ");
 $stmt->execute([$id]);
 $resulte=$stmt->fetchAll();

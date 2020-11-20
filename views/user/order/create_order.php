@@ -1,8 +1,16 @@
-<?php $PAGE_TITLE = "Create order";
+<?php
+session_start();
+$PAGE_TITLE = "Create order";
 $PAGE_STYLESHEETS = "<link rel='stylesheet' href='../../../css/create_order.css'>";
 $PAGE_SCRIPTS = "<script src='../../../js/create_order.js'></script>
                 <script src='../../../js/send-order.js'></script>";
 require_once "../../../templates/header.php";
+
+if (!isset($_SESSION["account-type"])) {
+    header("Location: /cafeteria/login.php");
+}
+
+
 ?>
 <div class="loading-overlay d-flex justify-content-center align-items-center">
     <i class="fas fa-spinner fa-pulse"></i>
@@ -20,7 +28,7 @@ require_once "../../../templates/header.php";
 <div class="container">
     <div class="row order">
         <h2 class="order-heading col-12 border-bottom mb-5 pb-2">User Order</h2>
-        
+
         <div class="col-12 col-md-4 menu-text d-flex align-items-center">menu</div>
         <div class="multi-select-dropdown col-12 col-md-4 d-flex flex-column pl-2 pr-2 pl-md-2 pr-md-0 mb-0">
             <div class="select-area border d-flex align-items-center mb-3">
@@ -74,7 +82,7 @@ require_once "../../../templates/header.php";
                     <div class="total-order-price-container d-flex px-3 align-items-center mb-3 flex-wrap display-none">
                         <span class="col-6">Total:</span>
                         <span class="col-6 font-weight-bolder total-price">0</span>
-                        <a href="javascript:;" id="send-order" class="btn btn-success col-12 mt-2" >Order now!</a> <!-- will contain data-user-id='1' via JS -->
+                        <a href="javascript:;" id="send-order" class="btn btn-success col-12 mt-2">Order now!</a> <!-- will contain data-user-id='1' via JS -->
                     </div>
                 </div>
             </div>

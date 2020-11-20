@@ -23,13 +23,15 @@
         <div class="text-center">&copy; Copyright David Chu's China Bistro 2016</div>
     </footer>
   </div>
+  <div class="text-center">&copy; Copyright David Chu's China Bistro 2016</div>
+</footer>
+</div>
 </body>
 <script src="/cafeteria/js/jquery.js"></script>
 <script src="/cafeteria/js/bootstrap.bundle.js"></script>
 <script src="/cafeteria/js/main.js"></script>
 %PAGE_SCRIPTS%
-<?php ob_end_flush();?> 
+<?php ob_end_flush(); ?>
 </body>
 </html>
-
 

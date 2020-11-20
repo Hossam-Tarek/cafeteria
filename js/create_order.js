@@ -262,7 +262,7 @@ $(window).on('load', function () {
     function displayCheckedCategoriesOnly(checkedCategories) {
         for (let index = 0; index < allCategoriesheader.length; index++) {
             const category = $(allCategoriesheader[index]);
-            if (checkedCategories.indexOf(category.attr('data-category-id')) == -1) {
+            if (checkedCategories.indexOf(parseInt(category.attr('data-category-id'))) == -1) {
                 category.addClass('display-none').next().addClass('display-none');
             } else {
                 category.removeClass('display-none').next().removeClass('display-none');
