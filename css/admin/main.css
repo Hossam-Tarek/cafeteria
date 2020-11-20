@@ -123,3 +123,13 @@ a[data-toggle="collapse"] {
         margin-left: 0;
     }
 }
+#details
+{
+    visibility: hidden;
+}
+#orders
+{
+    visibility: hidden;
+    margin-top: 50px;
+
+}
