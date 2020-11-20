@@ -73,7 +73,7 @@ $name = "user";
                     <a class="nav-link" href="../../logout.php">Log out</a>
                 </li>
 
-                <li class="nav-item dropdown mt-2">
+                <li class="nav-item dropdown mt-2" id="dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="caret"></span>
                     </a>
@@ -89,7 +89,8 @@ $name = "user";
             </ul>
         </div>
     </nav>
-    <div class="content">
+    <div id="content">
+
         
         
 
