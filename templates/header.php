@@ -92,8 +92,3 @@ ob_start("callback");
         </div>
     </nav>
     <div id="content">
-
-                </ul>
-            </div>
-        </nav>
-        <div class="content">
