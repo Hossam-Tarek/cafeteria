@@ -23,7 +23,6 @@
         <div class="text-center">&copy; Copyright David Chu's China Bistro 2016</div>
     </footer>
   </div>
-  <div class="text-center">&copy; Copyright David Chu's China Bistro 2016</div>
 </footer>
 </div>
 </body>

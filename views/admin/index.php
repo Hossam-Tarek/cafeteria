@@ -70,8 +70,8 @@ $userNum = getNumber("User");
                 <a href="#order-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Order</a>
 
                 <ul class="collapse list-unstyled" id="order-menu">
-                    <li><a href="#">All orders</a></li>
-                    <li><a href="#">new order</a></li>
+                    <li><a href="order/all_orders.php">All orders</a></li>
+                    <li><a href="../user/order/create_order.php">new order</a></li>
                 </ul>
             </li>
         </ul>

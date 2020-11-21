@@ -24,7 +24,8 @@
         header("Location: /cafeteria/login.php");
     }
 ?>
-<div class="container">
+
+<div class="container" id="user-container">
     <h1 class="mt-3 mb-3">My Orders</h1>
     <form class="row">
         <div class="form-group col-md-3">
@@ -36,15 +37,17 @@
             <input class="form-control" type="date" id="date-to"/>
         </div>
     </form>
+
     <div id="error" class=" alert alert-danger"></div>
+
     <table class="table border" id="submit-date">
         <thead>
-        <tr>
-            <th scope="col">Order date</th>
-            <th scope="col">Status</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Action</th>
-        </tr>
+            <tr>
+                <th scope="col">Order date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Action</th>
+            </tr>
         </thead>
         <tbody id="getData">
 
@@ -80,15 +83,15 @@
                 $id = ($column['order_id']);
     ?>
 
-        <tr role='button' class="user-order" data-id="<?php echo $id; ?>">  <!-- click  on order do function with order id as parameter -->
-            <td><?php echo date('Y-m-d', strtotime($column['date'])); ?></td>
-            <td><?php echo ($status); ?></td>
-            <td data-id="<?php echo $id ?>" data-price="<?php echo ($orderPrices[0 + $i]); ?>"><?php echo ($orderPrices[0 + $i]); ?> LE</td>
-            <td><?php if ($column['status'] == 0): ?>
-                     <a class="btn btn-danger cancel-button" data-id="<?php echo $id; ?>">cancel</a>
-                <?php endif;?>
-            </td>
-        </tr>
+            <tr role='button' class="user-order" data-id="<?php echo $id; ?>">  <!-- click  on order do function with order id as parameter -->
+                <td><?php echo date('Y-m-d', strtotime($column['date'])); ?></td>
+                <td><?php echo ($status); ?></td>
+                <td data-id="<?php echo $id ?>" data-price="<?php echo ($orderPrices[0 + $i]); ?>"><?php echo ($orderPrices[0 + $i]); ?> LE</td>
+                <td><?php if ($column['status'] == 0): ?>
+                        <a class="btn btn-danger cancel-button" data-id="<?php echo $id; ?>">cancel</a>
+                    <?php endif;?>
+                </td>
+            </tr>
 
     <?php 
         $i++;
@@ -98,14 +101,16 @@
 
         </tbody>
     </table>
-    <div id="products" class="p-3 align-items-center justify-content-center">
-    </div>
+
+    <div id="products" class="p-3 align-items-center justify-content-center"></div>
+
     <div class="font-weight-bolder float-right">
          <span >Total:</span>
          <span id="total-sum"><?php echo(array_sum($orderPrices));  ?></span><span> LE</span>
     </div>
 
 </div>
+
 <?php
     require_once "../../templates/footer.php";
 ?>

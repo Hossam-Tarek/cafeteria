@@ -1,11 +1,11 @@
 <?php
    $PAGE_TITLE = "All Orders";
-   $PAGE_STYLESHEETS = "";
+   $PAGE_STYLESHEETS = "<link rel='stylesheet' href='../../../css/admin/admin.css'>";
    $PAGE_SCRIPTS = "<script src='/cafeteria/js/admin/main.js'></script>";
    require_once "../../../templates/header.php";   
    require_once "../../../database_connection.php";        
 ?>
-<div class='container'>
+<div class='container' id="container">
 <div class='row'>
 <div class='col-sm-12'>
 <?php

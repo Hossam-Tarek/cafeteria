@@ -11,7 +11,8 @@
     //require_once "../../../database_connection.php";
 
      $PAGE_TITLE="Add Product";
-     $PAGE_STYLESHEETS = "<link rel='stylesheet' href='/cafeteria/css/admin/main.css'>";
+     $PAGE_STYLESHEETS = "<link rel='stylesheet' href='/cafeteria/css/admin/main.css'>
+                           <link rel='stylesheet' href='../../../css/admin/admin.css'>";
      $PAGE_SCRIPTS = "<script src='/cafeteria/js/admin/main.js'></script>";
     
     $nameErr=$name="";
@@ -93,7 +94,7 @@
         }
     }
 ?>
-<div class="container">
+<div class="container" id="container">
     <h2 class="text-center my-3 text-secondary">Add product </h2>
     <form method="post" class="form-group" enctype="multipart/form-data">
         
