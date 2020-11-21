@@ -53,7 +53,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
         $_SESSION["email"] = $_POST["email"];
         $_SESSION["account-type"] = "user";
         $_SESSION["success"] = "Logged in successfully";
-        header("Location: /cafeteria/views/user/index.php");
+        header("Location: /cafeteria/views/user/user-orders.php");
         return;
     } else {
         $_SESSION["error"] = "Incorrect password";

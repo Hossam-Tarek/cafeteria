@@ -17,3 +17,6 @@
 #error{
     display: none;
 }
+#user-container{
+    padding-bottom: 130px;
+}

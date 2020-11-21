@@ -7,7 +7,7 @@
         return;
     }
      $PAGE_TITLE="Add Category";
-     $PAGE_STYLESHEETS = "";
+     $PAGE_STYLESHEETS = '<link rel="stylesheet" href="../../../css/admin/admin.css">';
      $PAGE_SCRIPTS = "<script src='/cafeteria/js/admin/main.js'></script>";
      require_once  "../../../templates/header.php"; 
      //require_once "../../../database_connection.php";
@@ -52,7 +52,7 @@
   }
     
 ?>
-<div class="container">
+<div class="container" id="container">
     <h1 class="text-center text-secondary my-3">Add New Category </h1>
     <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" class="form-group" id='form1'>
         <label for="Category Name">Category Name</label>

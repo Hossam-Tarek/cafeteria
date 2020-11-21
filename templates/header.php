@@ -45,12 +45,12 @@ ob_start("callback");
         </button>
         <div class="collapse navbar-collapse" id="navbar-list-4">
             <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="/cafeteria/views/admin/index.php">Home <span class="sr-only">(current)</span></a></li>
                 <?php if ($name == "Admin"): ?>
-                <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
-                <li class="nav-item"><a class="nav-link " href="views/admin/user/all_users.php">Users</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" >Manual Order</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" >Checks</a></li>
+                <li class="nav-item"><a class="nav-link" href="/cafeteria/views/admin/product/all_products.php">Products</a></li>
+                <li class="nav-item"><a class="nav-link " href="/cafeteria/views/admin/user/all_users.php">Users</a></li>
+                <li class="nav-item"><a class="nav-link" href="/cafeteria/views/user/order/create_order.php" >Manual Order</a></li>
+                <li class="nav-item"><a class="nav-link" href="/cafeteria/views/admin/checks orders/checks.php" >Checks</a></li>
                 <?php endif?>
                 <?php if ($name != "Admin"): ?>             
                 <li class="nav-item"><a class="nav-link" href="/cafeteria/views/user/user-orders.php" >My Orders</a></li>
@@ -72,11 +72,11 @@ ob_start("callback");
                    </a>
                 </li>
                 <li class="nav-item d-lg-none">
-                    <a class="nav-link" href="../../logout.php">Log out</a>
+                    <a class="nav-link" href="/cafeteria/logout.php">Log out</a>
                 </li>
 
                 <li class="nav-item dropdown mt-2" id="dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle ml-4" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="caret"></span>
                     </a>
                     <div class="dropdown-menu login-dropdown" aria-labelledby="navbarDropdown">
@@ -85,7 +85,7 @@ ob_start("callback");
                         </span>
                         <span class="dropdown-item"><?php  echo $name;?></span>
                     <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="../../logout.php">Log out</a>
+                        <a class="dropdown-item" href="/cafeteria/logout.php">Log out</a>
                     </div>
                 </li>
             </ul>
