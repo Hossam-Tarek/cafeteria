@@ -3,6 +3,7 @@
     require_once '../../models/product.php';
     
     header('Content-Type: application/json');
+    
     // instantiate Database object and connection
     $db = new Database();
     $conn = $db -> connect();
