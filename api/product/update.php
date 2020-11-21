@@ -4,13 +4,7 @@
     
     header('Content-Type: application/json');
     header("Access-Control-Allow-Methods: POST");
-    header("Access-Control-Max-Age: 3600");
-    header("Access-Control-Allow-Headers: Content-Type, 
-    Access-Control-Allow-Headers, 
-    Access-Control-Allow-Methods, 
-    Authorization, 
-    X-Requested-With");
- 
+
     // instantiate Database object and connection
     $db = new Database();
     $conn = $db -> connect();
