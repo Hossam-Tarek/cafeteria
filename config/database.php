@@ -7,7 +7,7 @@
             $this -> conn = null;
             $dsn = Parent::BDMS_NAME . ':host=' . Parent::HOST . ';dnname=' . Parent::BD_NAME;
             try {
-                $this -> conn = new PDO('mysql:host=localhost;dbname=cafeteria','root','0000');
+                $this -> conn = new PDO('mysql:host=localhost;dbname=cafeteria',Parent::USERNAME,Parent::PASSWORD);
             } catch (PDOException $e) {
                 echo 'Connection Error: ' . $e -> getMessage();
             }
@@ -15,7 +15,7 @@
         }
 
         public function close_connection(){
-            $this->conn->close();
+            // $this->conn->close();
         }
 
         function __destruct()
