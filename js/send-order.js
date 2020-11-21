@@ -20,12 +20,12 @@ $(window).on('load', function () {
         }
         if ((roomNumber !== null && adminSelectUser && $('#send-order').attr('data-user-type') == 0) // admin
             || (roomNumber !== null && $('#send-order').attr('data-user-type') != 0)) { // unormal user 
-            $('#room-validation').addClass('display-none')
+                $('#room-validation').addClass('display-none')
             const orderNotes = $('#order-notes').val();
             prePareOrder(orderObj, roomNumber, orderNotes); // prepare order content
             console.log(orderObj);
             sendOrder(JSON.stringify(orderObj));
-        } else {
+        } else if(roomNumber === null){
             $('#room-validation').removeClass('display-none')
         }
     });
