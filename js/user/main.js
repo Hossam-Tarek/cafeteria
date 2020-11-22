@@ -40,7 +40,7 @@ function showOrder() {
 
     validateDate(valOfDateFrom, valOfDateTo);
 
-    // document.getElementById("products").style.display = "none";              
+    document.getElementById("products").style.display = "none";              
     let xhttp;
     let response;
     xhttp = new XMLHttpRequest();                        //ajax 
