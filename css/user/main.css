@@ -19,4 +19,5 @@
 }
 #user-container{
     padding-bottom: 130px;
+    min-height: 600px;
 }

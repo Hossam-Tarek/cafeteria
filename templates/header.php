@@ -52,7 +52,8 @@ ob_start("callback");
                 <li class="nav-item"><a class="nav-link" href="/cafeteria/views/user/order/create_order.php" >Manual Order</a></li>
                 <li class="nav-item"><a class="nav-link" href="/cafeteria/views/admin/checks orders/checks.php" >Checks</a></li>
                 <?php endif?>
-                <?php if ($name != "Admin"): ?>             
+                <?php if ($name != "Admin"): ?>    
+                <li class="nav-item"><a class="nav-link" href="./order/create_order.php" >Make Order</a></li>         
                 <li class="nav-item"><a class="nav-link" href="/cafeteria/views/user/user-orders.php" >My Orders</a></li>
                 <?php endif?>
                 </ul>
