@@ -6,4 +6,6 @@
     --primary-font-family: Poppins, sans-serif;
 }
 
-
+body {
+    background-color: var(--bg-color) !important;
+}
