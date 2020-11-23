@@ -17,6 +17,7 @@ $PAGE_TITLE="All Users";
 <div class="row ">
 <div class='col-sm-12'>
 <?php 
+    $default_img="avatar1.png";
     function ValidateData($data){
             $data=htmlentities($data);
             $data=htmlspecialchars($data);
@@ -27,11 +28,12 @@ $PAGE_TITLE="All Users";
   try{
       echo "<br>";
       echo "<h1 class=text-center>All Users</h1>";
-      echo "<a href='add-user.php' class='btn btn-success my-3'>Add New Product</a>";
+      echo "<a href='add-user.php' class='btn btn-success my-3'>Add New User</a>";
       echo "<br>";    
         $stmt=$conn->prepare("SELECT * FROM `User`");
         $stmt->execute();
         $users=$stmt->fetchAll();
+         
        if(count($users)>0){ 
         echo "<div class='table-responsive-sm'>";    
          echo "<table class='table  table-hover'>
@@ -45,6 +47,10 @@ $PAGE_TITLE="All Users";
            </tr>
          </thead>";
          foreach($users as $user){
+          if(empty($user['avatar']))
+          {
+            $user['avatar']=$default_img;
+          }
           echo "<tr id='".$user['user_id']."'>".              
           "<td> ".ValidateData($user['name'])."</td>".
           "<td> ".ValidateData($user['room_id'])."</td>".
