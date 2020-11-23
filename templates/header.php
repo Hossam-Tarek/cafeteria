@@ -61,6 +61,7 @@ ob_start("callback");
                     <li class="nav-item"><a class="nav-link " href="/cafeteria/views/admin/user/all_users.php">Users</a></li>
                     <li class="nav-item"><a class="nav-link" href="/cafeteria/views/user/order/create_order.php" >Manual Order</a></li>
                     <li class="nav-item"><a class="nav-link" href="/cafeteria/views/admin/checks orders/checks.php" >Checks</a></li>
+                    <li class="nav-item right-nav-list"><a class="nav-link" href="/cafeteria/logout.php">Log out</a></li>
 
                     <?php endif?>
 
