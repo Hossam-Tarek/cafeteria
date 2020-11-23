@@ -51,6 +51,7 @@ $(window).on('load', function () {
             data: orderData,
             success: function (response) {
                 resetInputs();
+                $('.total-price').text(0);
                 const productAreaHint = $('.hint-for-product-area'),
                     orderItemsContainer = $('.order-items'),
                     OrdreSuccessMessage = $(`
