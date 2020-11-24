@@ -1,0 +1,23 @@
+
+.success {
+    color: #4bb543;
+}
+#products{
+    border: 1px solid black;
+    display: none;
+    margin: auto;
+    overflow:visible;
+}
+.product{
+    text-align: center;
+}
+.product-image{
+     height:70px;
+}
+#error{
+    display: none;
+}
+#user-container{
+    padding-bottom: 130px;
+    min-height: 600px;
+}

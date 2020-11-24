@@ -1,14 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cafeteria</title>
+<?php
 
-    <link rel="stylesheet" href="css/main.css">
-</head>
-<body>
+session_start();
+$PAGE_TITLE = "Cafeteria";
+$PAGE_STYLESHEETS = '<link rel="stylesheet" href="/cafeteria/css/main.css">';
+$PAGE_SCRIPTS = "";
+require_once "templates/header.php";
+?>
+<div class="img-container">
+    <img src="img/coffee-time.jpg" id="img-background" alt="coffee time">
+</div>
 
-
-</body>
-</html>
+<?php
+require_once "templates/footer.php" 
+?>

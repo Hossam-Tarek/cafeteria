@@ -1,0 +1,14 @@
+
+.success {
+    color: #4bb543;
+}
+
+.img-container {
+    text-align: center;
+}
+
+#img-background {
+    max-height: 100vh;
+    max-width: 100vw;
+    align-self: center;
+}
